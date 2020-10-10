@@ -31,7 +31,7 @@ class _ButtomNavigationBarState extends State<ButtomNavigationBar> {
     }
   }
 
-   Widget _buttomNavigationBar(BuildContext context){
+  Widget _buttomNavigationBar(BuildContext context){
     return Theme(
       data: Theme.of(context).copyWith(
         canvasColor: Color.fromRGBO(36, 247, 188,1.0),

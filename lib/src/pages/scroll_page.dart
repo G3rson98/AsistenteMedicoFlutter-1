@@ -120,7 +120,7 @@ class _ScrollPageState extends State<ScrollPage> {
                 child: Text('Bienvenidos', style: TextStyle(fontSize: 20.0))
               ),
               onPressed: (){
-                Navigator.pushNamed(context, 'home');
+                Navigator.pushNamed(context, 'begin');
               },
             ),
             SizedBox(height: 150.0)
