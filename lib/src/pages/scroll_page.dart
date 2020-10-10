@@ -117,10 +117,10 @@ class _ScrollPageState extends State<ScrollPage> {
               color: Colors.blue,
               textColor: Colors.white,
               child: Padding(
-                  padding:
-                      EdgeInsets.symmetric(horizontal: 40.0, vertical: 20.0),
-                  child: Text('Bienvenidos', style: TextStyle(fontSize: 20.0))),
-              onPressed: () {
+                padding: EdgeInsets.symmetric(horizontal: 40.0, vertical: 20.0),
+                child: Text('Bienvenidos', style: TextStyle(fontSize: 20.0))),
+              onPressed: (){
+
                 Navigator.pushNamed(context, 'begin');
               },
             ),
