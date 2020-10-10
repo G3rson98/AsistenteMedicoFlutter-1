@@ -16,7 +16,7 @@ class HomePage extends StatelessWidget {
             child: Column(
               children: <Widget>[
                 _titulos(),
-                _botonesRedondeados(),
+                _botonesRedondeados(context),
               ],
             ),
           ),
@@ -121,32 +121,32 @@ class HomePage extends StatelessWidget {
   
  
 
-  Widget _botonesRedondeados() {
+  Widget _botonesRedondeados(BuildContext context) {
     return Table(
       children: <TableRow>[ //Fila de una tabla 
         TableRow(
           children: [
-            _crearBotonRedondeado(Colors.blue, Icons.sentiment_very_dissatisfied ,'Diagnóstico'),
-            _crearBotonRedondeado(Colors.red , Icons.calendar_today,'Calendario'),
+            _crearBotonRedondeado(Colors.blue, Icons.sentiment_very_dissatisfied ,'Diagnóstico','',context),
+            _crearBotonRedondeado(Colors.red , Icons.calendar_today,'Calendario','',context),
           ],
         ),
         TableRow(
           children: [
-            _crearBotonRedondeado(Colors.amber, Icons.insert_drive_file,'Documentos'),
-            _crearBotonRedondeado(Colors.green , Icons.local_hospital,'Consultas'),
+            _crearBotonRedondeado(Colors.amber, Icons.insert_drive_file,'Documentos','multimedia',context),
+            _crearBotonRedondeado(Colors.green , Icons.local_hospital,'Consultas','',context),
           ],
         ),
         TableRow(
           children: [
-            _crearBotonRedondeado(Colors.orange, Icons.insert_chart,'Estadísticas'),
-            _crearBotonRedondeado(Colors.purple , Icons.person_outline,'Perfil'),
+            _crearBotonRedondeado(Colors.orange, Icons.insert_chart,'Estadísticas','',context),
+            _crearBotonRedondeado(Colors.purple , Icons.person_outline,'Perfil','',context),
           ],
         ),
       ],
     );
   }
 
-  Widget _crearBotonRedondeado(Color color, IconData icono, String texto) {
+  Widget _crearBotonRedondeado(Color color, IconData icono, String texto, String ruta, BuildContext context) {
     return ClipRRect(
         child: BackdropFilter(
           filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
@@ -167,6 +167,7 @@ class HomePage extends StatelessWidget {
                       icon: Icon(icono), 
                       color: Colors.white,
                       onPressed: (){
+                        Navigator.of(context).pushNamed(ruta);
                       },
                     ),
                   ),
