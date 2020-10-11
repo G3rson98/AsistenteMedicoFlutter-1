@@ -1,8 +1,6 @@
-import 'package:asistentemedico/src/pages/multimedia_page.dart';
 import 'package:flutter/material.dart';
 import 'dart:ui';
 import 'dart:math';
-import 'package:dio/dio.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key key}) : super(key: key);
@@ -12,15 +10,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-
-  Future<List> countries;
-
-
-  @override
-  void initState() {
-    countries = getCountries();
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
