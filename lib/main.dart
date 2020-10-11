@@ -1,4 +1,5 @@
 import 'package:asistentemedico/src/models/diagnosis_query_model.dart';
+import 'package:asistentemedico/src/pages/search_page.dart';
 import 'package:asistentemedico/src/widget/question_condition_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -89,6 +90,7 @@ class MyApp extends StatelessWidget {
                 ]
             }
         ];
+  int number = 1;
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(
@@ -105,8 +107,9 @@ class MyApp extends StatelessWidget {
         'informacion' :   (BuildContext context) => InformacionPage(),
         'scroll'      :   (BuildContext context) => ScrollPage(),
         'begin'       :   (BuildContext context) => ButtomNavigationBar(),
-        'question'    :   (BuildContext context) => QuestionWidget(listEvidence: listEvidence, question: question, posibleAnswers: posibleAnswers),
+        'question'    :   (BuildContext context) => QuestionWidget(listEvidence: listEvidence, question: question, posibleAnswers: posibleAnswers, numberOfQuery: number),
         'multimedia'  :   (BuildContext context) => MultimediaPage(),
+        'search'      :   (BuildContext context) => SearchPage(),
       },
     );
   }

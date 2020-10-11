@@ -6,7 +6,8 @@ class QuestionWidget extends StatefulWidget {
   final List<Evidence> listEvidence;
   final String question;
   final List<dynamic> posibleAnswers;
-  const QuestionWidget({Key key, @required this.listEvidence, @required this.question, @required this.posibleAnswers}) : super(key: key);
+  final int numberOfQuery;
+  const QuestionWidget({Key key, @required this.listEvidence, @required this.question, @required this.posibleAnswers, @required this.numberOfQuery}) : super(key: key);
 
   @override
   _QuestionWidgetState createState() => _QuestionWidgetState();
@@ -16,6 +17,7 @@ class _QuestionWidgetState extends State<QuestionWidget> {
   String selectedRadioTile;
   List<dynamic> respuestas = [];
   final infermedicaDiagnosisProvider = new InfermedicaDiagnosisProvider();
+  int number;
 
   setSelectedRadioTile(String valor){
     setState(() {
@@ -52,16 +54,23 @@ class _QuestionWidgetState extends State<QuestionWidget> {
                 diagnosisQuery.sex = "male";
                 diagnosisQuery.evidence = widget.listEvidence;
                 infermedicaDiagnosisProvider.sendCondition(diagnosisQuery).then((responses) => {
+                  number = widget.numberOfQuery + 1,
                   for (var item in responses.question.items) {
                     respuestas.add(item.toJson()),
                   },
-                  print(respuestas),
-                  Navigator.push(
-                    context, 
-                    MaterialPageRoute(
-                      builder: (context)  =>  QuestionWidget(listEvidence: widget.listEvidence, question: responses.question.text, posibleAnswers: respuestas)
-                    )
-                  )
+                  
+                  if((number >= 20) || (responses.conditions[0].probability > 0.98)){
+                    print("Ya no más preguntas"),
+                    print(responses.conditions[0].probability),
+                    print(responses.conditions[0].name)
+                  }else{
+                    Navigator.push(
+                      context, 
+                      MaterialPageRoute(
+                        builder: (context)  =>  QuestionWidget(listEvidence: widget.listEvidence, question: responses.question.text, posibleAnswers: respuestas, numberOfQuery: number)
+                      )
+                    ),
+                  }
                 });
                 // print(widget.userConditionsList);
               })
