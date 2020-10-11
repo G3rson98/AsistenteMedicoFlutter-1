@@ -48,9 +48,22 @@ class Usuario {
         apellidoMaterno: json["apellido_materno"],
         genero: json["genero"],
         lugarNac: json["lugar_nac"],
-        altura: json["altura"].toDouble(),
-        peso: json["peso"].toDouble(),
+        altura: json["altura"],
+        peso: json["peso"],
       );
+
+  // String toString() {
+  //   return 'Acta Electoral 2020 \n' +
+  //       'Codigo barra: ' +
+  //       this.codigoBarra +
+  //       '\n' +
+  //       'Codigo Verificacion: ' +
+  //       this.codigoVerificacion +
+  //       '\n' +
+  //       'Tipo: ' +
+  //       this.tipo +
+  //       '\n';
+  // }
 
   Map<String, dynamic> toJson() => {
         "id": id,
