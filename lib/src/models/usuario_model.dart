@@ -1,62 +1,68 @@
+// To parse this JSON data, do
+//
+//     final usuario = usuarioFromJson(jsonString);
+
 import 'dart:convert';
 
-import 'dart:ffi';
+Usuario usuarioFromJson(String str) => Usuario.fromJson(json.decode(str));
 
-UsuarioModel usuarioModelFromJson(String str) =>
-    UsuarioModel.fromJson(json.decode(str));
+String usuarioToJson(Usuario data) => json.encode(data.toJson());
 
-String usuarioModelToJson(UsuarioModel data) => json.encode(data.toJson());
+class Usuario {
+  Usuario({
+    this.id,
+    this.nombreUsuario,
+    this.correo,
+    this.password,
+    this.celular,
+    this.nombre,
+    this.apellidoPaterno,
+    this.apellidoMaterno,
+    this.genero,
+    this.lugarNac,
+    this.altura,
+    this.peso,
+  });
 
-class UsuarioModel {
   int id;
   String nombreUsuario;
   String correo;
-  int telefono;
+  String password;
+  int celular;
   String nombre;
   String apellidoPaterno;
   String apellidoMaterno;
   String genero;
   String lugarNac;
-  Float altura;
-  Float peso;
+  double altura;
+  double peso;
 
-  UsuarioModel(
-      {this.id,
-      this.nombreUsuario,
-      this.correo,
-      this.telefono,
-      this.nombre,
-      this.apellidoPaterno,
-      this.apellidoMaterno,
-      this.genero,
-      this.lugarNac,
-      this.altura,
-      this.peso});
-
-  factory UsuarioModel.fromJson(Map<String, dynamic> json) => UsuarioModel(
+  factory Usuario.fromJson(Map<String, dynamic> json) => Usuario(
         id: json["id"],
-        nombreUsuario: json["nombreUsuario"],
+        nombreUsuario: json["nombre_usuario"],
         correo: json["correo"],
-        telefono: json["telefono"],
+        password: json["password"],
+        celular: json["celular"],
         nombre: json["nombre"],
-        apellidoPaterno: json["apellidoPaterno"],
-        apellidoMaterno: json["apellidoMaterno"],
+        apellidoPaterno: json["apellido_paterno"],
+        apellidoMaterno: json["apellido_materno"],
         genero: json["genero"],
-        lugarNac: json["lugarNac"],
-        altura: json["altura"],
-        peso: json["peso"],
+        lugarNac: json["lugar_nac"],
+        altura: json["altura"].toDouble(),
+        peso: json["peso"].toDouble(),
       );
 
   Map<String, dynamic> toJson() => {
         "id": id,
-        "nombreUsuario": nombreUsuario,
+        "nombre_usuario": nombreUsuario,
         "correo": correo,
-        "telefono": telefono,
+        "password": password,
+        "celular": celular,
         "nombre": nombre,
-        "apellidoPaterno": apellidoPaterno,
-        "apellidoMaterno": apellidoMaterno,
+        "apellido_paterno": apellidoPaterno,
+        "apellido_materno": apellidoMaterno,
         "genero": genero,
-        "lugarNac": lugarNac,
+        "lugar_nac": lugarNac,
         "altura": altura,
         "peso": peso,
       };

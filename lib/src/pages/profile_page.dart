@@ -11,7 +11,7 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   final formKey = GlobalKey<FormState>();
   final scaffoldKey = GlobalKey<ScaffoldState>();
-  UsuarioModel usuario = new UsuarioModel();
+  Usuario usuario = new Usuario();
 
   @override
   Widget build(BuildContext context) {
