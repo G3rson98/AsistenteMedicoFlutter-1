@@ -14,7 +14,7 @@ class _SearchPageState extends State<SearchPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
+      appBar: AppBar(                
         title: Text('Diagnostico'),
         backgroundColor: Colors.indigoAccent,
         actions: <Widget>[
