@@ -7,6 +7,7 @@ import 'package:asistentemedico/src/pages/home_page.dart';
 import 'package:asistentemedico/src/pages/scroll_page.dart';
 import 'package:asistentemedico/src/pages/informacion_page.dart';
 import 'package:asistentemedico/src/pages/buttom_nav_bar_page.dart';
+import 'package:asistentemedico/src/pages/multimedia_page.dart';
 
 void main() => runApp(MyApp());
  
@@ -105,6 +106,7 @@ class MyApp extends StatelessWidget {
         'scroll'      :   (BuildContext context) => ScrollPage(),
         'begin'       :   (BuildContext context) => ButtomNavigationBar(),
         'question'    :   (BuildContext context) => QuestionWidget(listEvidence: listEvidence, question: question, posibleAnswers: posibleAnswers),
+        'multimedia'  :   (BuildContext context) => MultimediaPage(),
       },
     );
   }
