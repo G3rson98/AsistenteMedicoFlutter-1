@@ -139,7 +139,6 @@ class _ProfilePageState extends State<ProfilePage> {
       padding: EdgeInsets.symmetric(horizontal: 25.0),
       child: TextFormField(
         // obscureText: true,
-        // enableInteractiveSelection: false,
         enabled: false,
         decoration: InputDecoration(
           icon: Icon(Icons.alternate_email,
