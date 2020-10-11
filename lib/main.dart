@@ -26,6 +26,7 @@ class MyApp extends StatelessWidget {
         'informacion': (BuildContext context) => InformacionPage(),
         'scroll': (BuildContext context) => ScrollPage(),
         'begin': (BuildContext context) => ButtomNavigationBar(),
+        //ID DE LA CARPETA RAIZ DEL USUARIO LOGUEADO
         'multimedia': (BuildContext context) => MultimediaPage(1),
         'login': (BuildContext context) => LoginPage(),
         'registrarUsuario': (BuildContext context) => RegistrarUsuario(),

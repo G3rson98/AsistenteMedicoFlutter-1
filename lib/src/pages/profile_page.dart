@@ -51,6 +51,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
   Widget inputFormulario() {
     return FutureBuilder<Usuario>(
+      //Sacar el id del usuario del Shared Preferences
         future: this.usuarioProv.getUsuario(1),
         builder: (BuildContext context, AsyncSnapshot<Usuario> snapshot) {
           if (snapshot.hasData) {

@@ -21,7 +21,7 @@ class UsuarioProvider {
       int id = decodedData['usuario']['id'];
       String nombreUsuario = decodedData['usuario']['nombre_usuario'];
       String correo = decodedData['usuario']['correo'];
-
+      //Traer en esta consulta el ID de la carpeta Raiz del usuario que se esta logueando
       addIntToSF('id', id);
       addStringToSF('usuario', nombreUsuario);
       addStringToSF('correo', correo);
@@ -50,7 +50,7 @@ class UsuarioProvider {
   Future<Usuario> getUsuario(int usuarioId) async {
     // http://192.168.1.125:8088/api/carpeta/show?carpeta_id=1
     final resp = await http.get(
-        'http://192.168.1.125:8080/asistenteMedico_backend/public/api/register/show?usuario_id=$usuarioId');
+        '$_url/api/register/show?usuario_id=$usuarioId');
     final Map<String, dynamic> decodeData = json.decode(resp.body);
     print(decodeData['data']);
     final Usuario usuario = Usuario.fromJson(decodeData['data']);

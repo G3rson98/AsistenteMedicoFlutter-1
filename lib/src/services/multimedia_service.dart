@@ -71,7 +71,7 @@ class MultimediaProvider {
   Future<bool> eliminarMultimedia(int multimedia_id) async {
     //http://192.168.1.125:8080/asistenteMedico_backend/public/api/multimedia/delete?multimedia_id=9
     final url =
-        'http://192.168.1.125:8080/asistenteMedico_backend/public/api/multimedia/delete?multimedia_id=$multimedia_id';
+        '$_dataApi/multimedia/delete?multimedia_id=$multimedia_id';
     //final headers = {'Content-Type': 'application/json'};
     // final encoding = Encoding.getByName('utf-8');
 
