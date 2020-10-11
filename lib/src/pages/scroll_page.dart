@@ -99,28 +99,42 @@ class _ScrollPageState extends State<ScrollPage> {
             child: Column(
             // mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              SizedBox(height: 60.0),
+              SizedBox(height: 100.0),
               Image(
                 image: AssetImage('assets/logo.png'),
                 height: 80.0,
                 width: 80.0,
+                color: Colors.white,
               ),
               SizedBox(height: 5.0),
               Text(
                 'Asistente médico', 
-                style: TextStyle(color: Colors.blue, fontSize: 15.0, fontWeight: FontWeight.bold),
+                style: TextStyle(color: Colors.white, fontSize: 24.0, fontWeight: FontWeight.bold),
               ),
               Expanded(child: Container()),
               RaisedButton(
                 shape: StadiumBorder(),
-                color: Colors.blue,
-                textColor: Colors.white,
+                color: Colors.white,
+                textColor: Colors.grey[700],
                 child: Padding(
                   padding: EdgeInsets.symmetric(horizontal: 40.0, vertical: 20.0),
-                  child: Text('Bienvenidos', style: TextStyle(fontSize: 20.0))
+                  child: Text('Iniciar Sesión', style: TextStyle(fontSize: 20.0))
                 ),
                 onPressed: (){
                   Navigator.pushNamed(context, 'login');
+                },
+              ),
+              SizedBox(height: 20.0),
+              RaisedButton(
+                shape: StadiumBorder(),
+                color: Colors.white,
+                textColor: Colors.grey[700],
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 40.0, vertical: 20.0),
+                  child: Text('Registrarse', style: TextStyle(fontSize: 20.0))
+                ),
+                onPressed: (){
+                  Navigator.pushNamed(context, 'registrarUsuario');
                 },
               ),
               SizedBox(height: 100.0)

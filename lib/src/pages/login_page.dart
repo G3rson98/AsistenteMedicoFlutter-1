@@ -14,6 +14,8 @@ class _LoginPageState extends State<LoginPage> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final usuarioProvider = new UsuarioProvider();
 
+  bool _bloquearBoton = false;
+
   Usuario usuario = new Usuario();
 
   @override
@@ -88,6 +90,7 @@ class _LoginPageState extends State<LoginPage> {
       padding: EdgeInsets.symmetric(horizontal: 25.0),
 
       child: TextFormField(
+        keyboardType: TextInputType.emailAddress,
         decoration: InputDecoration(
           icon: Icon(Icons.alternate_email, color: Color.fromRGBO(36, 247, 188, 1.0)),
           hintText: 'daniel@gmail.com',
@@ -129,7 +132,7 @@ class _LoginPageState extends State<LoginPage> {
       elevation: 0.0,
       color: Color.fromRGBO(36, 196, 249, 1.0),
       textColor: Colors.white,
-      onPressed: _submit,
+      onPressed: (_bloquearBoton) ? null : _submit,
       //()=> Navigator.pushNamed(context, 'home')
     );
 
@@ -137,17 +140,31 @@ class _LoginPageState extends State<LoginPage> {
 
   void _submit() async{
 
+    print(_bloquearBoton);
+
     formKey.currentState.save();
 
     print( usuario.correo );
     print( usuario.password );
 
+    setState(() {
+      _bloquearBoton = true;
+    });
+
+    print(_bloquearBoton);
+
     var login = usuarioProvider.validarLogin(usuario);
     
     if( await login ){
+      setState(() {
+        _bloquearBoton = true;
+      });
       Navigator.pushReplacementNamed(context, 'begin');
       // Navigator.pushNamed(context, 'home');
     }else{
+      setState(() {
+        _bloquearBoton = true;
+      });
       mostrarSnackbar('Credenciales incorrectas, intente de nuevo', Color.fromRGBO(36, 196, 249, 1.0));
     }
   }

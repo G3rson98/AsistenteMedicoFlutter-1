@@ -1,4 +1,5 @@
 import 'package:asistentemedico/src/pages/login_page.dart';
+import 'package:asistentemedico/src/pages/registrarUsuario_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -27,6 +28,7 @@ class MyApp extends StatelessWidget {
         'begin': (BuildContext context) => ButtomNavigationBar(),
         'multimedia': (BuildContext context) => MultimediaPage(1),
         'login': (BuildContext context) => LoginPage(),
+        'registrarUsuario': (BuildContext context) => RegistrarUsuario(),
       },
     );
   }
