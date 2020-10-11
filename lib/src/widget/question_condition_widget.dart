@@ -58,7 +58,6 @@ class _QuestionWidgetState extends State<QuestionWidget> {
                   for (var item in responses.question.items) {
                     respuestas.add(item.toJson()),
                   },
-                  
                   if((number >= 20) || (responses.conditions[0].probability > 0.98)){
                     print("Ya no más preguntas"),
                     print(responses.conditions[0].probability),
@@ -97,5 +96,4 @@ class _QuestionWidgetState extends State<QuestionWidget> {
     }
     return radioWidgets;
   }
-
 }
