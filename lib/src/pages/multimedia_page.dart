@@ -5,7 +5,9 @@ import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 
 
 class MultimediaPage extends StatefulWidget {
-  MultimediaPage({Key key}) : super(key: key);
+  final Future<List> countries;
+
+  MultimediaPage({Key key,@required this.countries}) : super(key: key); //Constructor
 
   @override
   _MultimediaPageState createState() => _MultimediaPageState();
@@ -24,7 +26,7 @@ class _MultimediaPageState extends State<MultimediaPage> {
           padding: EdgeInsets.all(10),
           child: Column(
             children: <Widget>[
-              crearCard(context),
+              _crearListaCard(context),
             ],
           ),
         ),
@@ -53,19 +55,28 @@ class _MultimediaPageState extends State<MultimediaPage> {
   }
 }
 
-Widget crearCard(BuildContext context){
-  return Container(
+Widget _crearListaCard(BuildContext context){
+  return  Container(
                 padding: EdgeInsets.all(10),
                 child: ListView(
                   shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
                   children: <Widget> [
-                    GestureDetector(
+                    _crearCard(context),
+                  ],
+                ),
+              );
+          
+}
+
+Widget _crearCard(BuildContext context){
+  return GestureDetector(
                       onTap: () {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) => MultimediaPage(),
-                          ),
-                        );
+                        // Navigator.of(context).push(
+                        //   MaterialPageRoute(
+                        //     builder: (context) => MultimediaPage(),
+                        //   ),
+                        // );
                       },
                       child: Card(
                         elevation: 10,
@@ -112,9 +123,5 @@ Widget crearCard(BuildContext context){
                         ),
                         
                       ),
-                    ),
-                  ],
-                ),
-                
-              );
+                    );
 }

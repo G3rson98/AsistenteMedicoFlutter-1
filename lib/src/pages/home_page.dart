@@ -1,12 +1,30 @@
+import 'package:asistentemedico/src/pages/multimedia_page.dart';
 import 'package:flutter/material.dart';
 import 'dart:ui';
 import 'dart:math';
+import 'package:dio/dio.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({Key key}) : super(key: key);
 
   @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+
+  Future<List> countries;
+
+
+  @override
+  void initState() {
+    countries = getCountries();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       
       body: Stack(
@@ -118,8 +136,6 @@ class HomePage extends StatelessWidget {
           ),
     );
   }
-  
- 
 
   Widget _botonesRedondeados(BuildContext context) {
     return Table(
@@ -146,6 +162,12 @@ class HomePage extends StatelessWidget {
     );
   }
 
+  Future<List> getCountries() async {
+    var response = await Dio().get('https://restcountries.eu/rest/v2/all');
+    print(response.data);
+    return response.data;
+  }
+
   Widget _crearBotonRedondeado(Color color, IconData icono, String texto, String ruta, BuildContext context) {
     return ClipRRect(
         child: BackdropFilter(
@@ -168,6 +190,10 @@ class HomePage extends StatelessWidget {
                       color: Colors.white,
                       onPressed: (){
                         Navigator.of(context).pushNamed(ruta);
+                        if (ruta.compareTo('multimedia') == 0){
+
+                          Navigator.of(context).push(MaterialPageRoute(builder: (context)=>MultimediaPage(countries: countries)));
+                        }
                       },
                     ),
                   ),

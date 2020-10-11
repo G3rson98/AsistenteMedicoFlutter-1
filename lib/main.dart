@@ -12,6 +12,7 @@ void main() => runApp(MyApp());
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    Future<List> countries;
     SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle.light.copyWith(
         statusBarColor: Colors.white
@@ -26,7 +27,7 @@ class MyApp extends StatelessWidget {
         'informacion' :   (BuildContext context) => InformacionPage(),
         'scroll'      :   (BuildContext context) => ScrollPage(),
         'begin'       :   (BuildContext context) => ButtomNavigationBar(),
-        'multimedia'  :   (BuildContext context) => MultimediaPage(),
+        'multimedia'  :   (BuildContext context) => MultimediaPage(countries:countries),
       },
     );
   }
