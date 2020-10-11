@@ -10,8 +10,7 @@ class ResultPage extends StatefulWidget {
   _ResultPageState createState() => _ResultPageState();
 }
 
-class _ResultPageState extends State<ResultPage> {
-  final f = new DateFormat('yyyy-MM-dd hh:mm');
+class _ResultPageState extends State<ResultPage> {  
 
   @override
   Widget build(BuildContext context) {
@@ -52,8 +51,14 @@ class _ResultPageState extends State<ResultPage> {
               width: double.maxFinite,
               child: Column(
                 children: <Widget>[
+                  Text('Mi Diagnostico'),
                   Text(
-                      new DateFormat.yMd().add_jm().format(new DateTime.now())),
+                      new DateFormat.yMd().add_jm().format(new DateTime.now()),
+                      style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold),
+                      ),
                   SizedBox(
                     height: 40.0,
                   ),
@@ -69,7 +74,7 @@ class _ResultPageState extends State<ResultPage> {
                   RaisedButton(
                     child: Text('hola jeje'),
                     onPressed: (){
-                      
+
                     },
                   )
                 ],
