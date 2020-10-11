@@ -1,4 +1,5 @@
 import 'package:asistentemedico/src/models/diagnosis_query_model.dart';
+import 'package:asistentemedico/src/pages/results_page.dart';
 import 'package:asistentemedico/src/pages/search_page.dart';
 import 'package:asistentemedico/src/widget/question_condition_widget.dart';
 import 'package:flutter/material.dart';
@@ -101,7 +102,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Asistente médico',
       debugShowCheckedModeBanner: false,
-      initialRoute: 'question',
+      initialRoute: 'result',
       routes: {
         'home'        :   (BuildContext context) => HomePage(),
         'informacion' :   (BuildContext context) => InformacionPage(),
@@ -110,6 +111,7 @@ class MyApp extends StatelessWidget {
         'question'    :   (BuildContext context) => QuestionWidget(listEvidence: listEvidence, question: question, posibleAnswers: posibleAnswers, numberOfQuery: number),
         'multimedia'  :   (BuildContext context) => MultimediaPage(),
         'search'      :   (BuildContext context) => SearchPage(),
+        'result'      :   (BuildContext context) => ResultPage(),
       },
     );
   }
