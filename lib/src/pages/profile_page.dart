@@ -1,4 +1,5 @@
 import 'package:asistentemedico/src/models/usuario_model.dart';
+import 'package:asistentemedico/src/services/usuario_service.dart';
 import 'package:flutter/material.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -11,7 +12,8 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   final formKey = GlobalKey<FormState>();
   final scaffoldKey = GlobalKey<ScaffoldState>();
-  Usuario usuario = new Usuario();
+  Usuario usuario;
+  UsuarioProvider usuarioProv = new UsuarioProvider();
 
   @override
   Widget build(BuildContext context) {
@@ -38,26 +40,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 Text('Mi Perfil',
                     style: TextStyle(fontSize: 20.0, color: Colors.grey[600])),
                 SizedBox(height: 30.0),
-                Form(
-                  key: formKey,
-                  child: Column(
-                    children: <Widget>[
-                      _crearUsuario(),
-                      SizedBox(height: 10.0),
-                      _crearNombre(),
-                      SizedBox(height: 10.0),
-                      _crearApellidoPaterno(),
-                      SizedBox(height: 10.0),
-                      _crearApellidoMaterno(),
-                      SizedBox(height: 10.0),
-                      _crearCorreo(),
-                      // SizedBox(height: 50.0),
-                      // _crearPassword(),
-                      SizedBox(height: 50.0),
-                      _crearBoton(context)
-                    ],
-                  ),
-                ),
+                inputFormulario(),
               ],
             ),
           )
@@ -66,10 +49,45 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
-  Widget _crearUsuario() {
+  Widget inputFormulario() {
+    return FutureBuilder<Usuario>(
+        future: this.usuarioProv.getUsuario(1),
+        builder: (BuildContext context, AsyncSnapshot<Usuario> snapshot) {
+          if (snapshot.hasData) {
+            final usuario = snapshot.data;
+            final list = new List<Widget>();
+            list.add(_crearUsuario(usuario));
+            list.add(SizedBox(height: 10.0));
+            list.add(_crearNombre(usuario));
+            list.add(SizedBox(height: 10.0));
+            list.add(_crearApellidoPaterno(usuario));
+            list.add(SizedBox(height: 10.0));
+            list.add(_crearApellidoMaterno(usuario));
+            list.add(SizedBox(height: 10.0));
+            list.add(_crearCorreo(usuario));
+            list.add(SizedBox(height: 10.0));
+            list.add(_crearBoton(context));
+            return Form(
+                key: formKey,
+                child: Column(
+                  children: list,
+                ));
+          } else {
+            return Container(
+              alignment: Alignment.center,
+              child: Center(
+                child: CircularProgressIndicator(),
+              ),
+            );
+          }
+        });
+  }
+
+  Widget _crearUsuario(Usuario usu) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 25.0),
       child: TextFormField(
+        initialValue: usu.nombreUsuario,
         decoration: InputDecoration(
             icon: Icon(Icons.account_circle,
                 color: Color.fromRGBO(251, 196, 107, 1.0)),
@@ -83,10 +101,11 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
-  Widget _crearNombre() {
+  Widget _crearNombre(Usuario usu) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 25.0),
       child: TextFormField(
+        initialValue: usu.nombre,
         decoration: InputDecoration(
             icon: Icon(Icons.person_outline,
                 color: Color.fromRGBO(251, 196, 107, 1.0)),
@@ -100,10 +119,11 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
-  Widget _crearApellidoPaterno() {
+  Widget _crearApellidoPaterno(Usuario usu) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 25.0),
       child: TextFormField(
+        initialValue: usu.apellidoPaterno,
         decoration: InputDecoration(
             icon: Icon(Icons.arrow_right,
                 color: Color.fromRGBO(251, 196, 107, 1.0)),
@@ -117,10 +137,11 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
-  Widget _crearApellidoMaterno() {
+  Widget _crearApellidoMaterno(Usuario usu) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 25.0),
       child: TextFormField(
+        initialValue: usu.apellidoMaterno,
         decoration: InputDecoration(
             icon: Icon(Icons.arrow_right,
                 color: Color.fromRGBO(251, 196, 107, 1.0)),
@@ -134,11 +155,11 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
-  Widget _crearCorreo() {
+  Widget _crearCorreo(Usuario usu) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 25.0),
       child: TextFormField(
-        // obscureText: true,
+        initialValue: usu.correo,
         enabled: false,
         decoration: InputDecoration(
           icon: Icon(Icons.alternate_email,
@@ -201,7 +222,9 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   void _submit() async {
-    // formKey.currentState.save();
+    formKey.currentState.save();
+
+    print('Usuario: ' + this.usuario.toString());
     // var login = delegadoProvider.validarLogin(delegado);
 
     // if (await login) {

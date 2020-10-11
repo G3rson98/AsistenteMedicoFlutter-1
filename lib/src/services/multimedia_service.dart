@@ -94,7 +94,7 @@ class MultimediaProvider {
     final List<MultimediaModel> multimedias = new List();
     if (decodeData['data'] == null) return [];
     final carpeta = decodeData['data'];
-    print(decodeData['data']);
+    //print(decodeData['data']);
     carpeta.forEach((value) {
       final c = MultimediaModel.fromJson(value);
       multimedias.add(c);
