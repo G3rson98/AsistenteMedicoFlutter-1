@@ -79,7 +79,7 @@ class _QuestionWidgetState extends State<QuestionWidget> {
                   for (var item in responses.question.items) {
                     respuestas.add(item.toJson()),
                   },
-                  if((number >= 20) || (responses.conditions[0].probability > 0.98)){
+                  if((number >= 2) || (responses.conditions[0].probability > 0.98)){
                     Navigator.push(
                       context, 
                       MaterialPageRoute(
