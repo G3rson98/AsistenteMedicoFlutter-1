@@ -1,4 +1,6 @@
+import 'package:asistentemedico/src/models/diagnosis_query_model.dart';
 import 'package:asistentemedico/src/providers/infermedica_provider.dart';
+import 'package:asistentemedico/src/widget/question_condition_widget.dart';
 import 'package:flutter/material.dart';
 
 class DataSearch extends SearchDelegate {
@@ -6,9 +8,14 @@ class DataSearch extends SearchDelegate {
   ////////////////////////////////////////////////////
   ///
   ///
+  ///
+  int number = 1;
   List preguntas ;
   List ids;
   List objSintomas;
+  List<Evidence> evid=[];
+  final infermedicaDiagnosisProvider = new InfermedicaDiagnosisProvider();
+  List<dynamic> respuestas = [];
 
   final preguntasRecientes = [
     'Dolor de muela',
@@ -83,7 +90,29 @@ class DataSearch extends SearchDelegate {
           title: Text(listaSugerida[i]),
           onTap: (){
             int n =  preguntas.lastIndexOf(listaSugerida[i]);
-            print(ids[n]);                        
+            print(ids[n]);  
+            Evidence evidence = new Evidence();
+            evidence.id=ids[n];
+            evidence.choiceId = "present";
+            this.evid.add(evidence);
+
+            DiagnosisQuery diagnosisQuery = new DiagnosisQuery();
+            diagnosisQuery.age = 30;
+            diagnosisQuery.sex = "male";
+            diagnosisQuery.evidence = this.evid;
+
+            infermedicaDiagnosisProvider.sendCondition(diagnosisQuery).then((responses) => {
+              for (var item in responses.question.items) {
+                    respuestas.add(item.toJson()),
+              },
+              Navigator.push(
+                      context, 
+                      MaterialPageRoute(
+                        builder: (context)  =>  QuestionWidget(listEvidence: this.evid, question: responses.question.text, posibleAnswers: respuestas, numberOfQuery: number)
+                      )
+                    ),
+            });
+            
           },
         );
       },

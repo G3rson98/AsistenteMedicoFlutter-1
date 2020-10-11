@@ -126,7 +126,7 @@ class HomePage extends StatelessWidget {
       children: <TableRow>[ //Fila de una tabla 
         TableRow(
           children: [
-            _crearBotonRedondeado(Colors.blue, Icons.sentiment_very_dissatisfied ,'Diagnóstico','',context),
+            _crearBotonRedondeado(Colors.blue, Icons.sentiment_very_dissatisfied ,'Diagnóstico','search',context),
             _crearBotonRedondeado(Colors.red , Icons.calendar_today,'Calendario','',context),
           ],
         ),
