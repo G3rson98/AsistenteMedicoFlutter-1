@@ -9,12 +9,20 @@ class CarpetaModel {
   int id;
   String nombre;
   int fkCarpeta;
+  int fkUsuario;
 
-  CarpetaModel({this.id, this.nombre, this.fkCarpeta});
+  CarpetaModel({this.id, this.nombre, this.fkCarpeta, this.fkUsuario});
 
   factory CarpetaModel.fromJson(Map<String, dynamic> json) => CarpetaModel(
-      id: json["id"], nombre: json["nombre"], fkCarpeta: json["fk_carpeta"]);
+      id: json["id"],
+      nombre: json["nombre"],
+      fkCarpeta: json["fk_carpeta"],
+      fkUsuario: json["fk_usuario"]);
 
-  Map<String, dynamic> toJson() =>
-      {"id": id, "nombre": nombre, "fk_carpeta": fkCarpeta};
+  Map<String, dynamic> toJson() => {
+        // "id": id,
+        "nombre": nombre,
+        "carpeta_id": fkCarpeta,
+        "usuario_id": fkUsuario
+      };
 }
