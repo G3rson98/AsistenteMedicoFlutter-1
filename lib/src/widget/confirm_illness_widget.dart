@@ -1,4 +1,5 @@
 import 'package:asistentemedico/src/models/diagnosis_response_model.dart';
+import 'package:asistentemedico/src/providers/translate_provider.dart';
 import 'package:flutter/material.dart';
 
 class ConfirmIllnessWidget extends StatefulWidget {
@@ -11,6 +12,7 @@ class ConfirmIllnessWidget extends StatefulWidget {
 
 class _ConfirmIllnessWidgetState extends State<ConfirmIllnessWidget> {
   String selectedRadioTile;
+  final translateProvider = new TranslateProvider();
 
   setSelectedRadioTile(String valor){
     setState(() {
@@ -85,7 +87,7 @@ class _ConfirmIllnessWidgetState extends State<ConfirmIllnessWidget> {
                 FlatButton(
                   child: Text('Confirmar'),
                   onPressed: (){
-                    print("Confirma enfermedad " + selectedRadioTile);
+                    translateProvider.getTranslation("Hi my name is Daniel");
                   },
                 ),
                 
