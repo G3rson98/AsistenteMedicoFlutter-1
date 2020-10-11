@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Asistente médico',
       debugShowCheckedModeBanner: false,
-      initialRoute: 'confirm',
+      initialRoute: 'home',
       routes: {
         'home'        :   (BuildContext context) => HomePage(),
         'informacion' :   (BuildContext context) => InformacionPage(),
@@ -30,8 +30,7 @@ class MyApp extends StatelessWidget {
         'begin'       :   (BuildContext context) => ButtomNavigationBar(),
         'multimedia'  :   (BuildContext context) => MultimediaPage(),
         'search'      :   (BuildContext context) => SearchPage(),
-        'result'      :   (BuildContext context) => ResultPage(),
-        'confirm'     :   (BuildContext context) => ConfirmIllnessWidget(),
+
       },
     );
   }

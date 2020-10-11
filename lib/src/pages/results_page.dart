@@ -1,4 +1,5 @@
 import 'package:asistentemedico/src/models/diagnosis_response_model.dart';
+import 'package:asistentemedico/src/widget/confirm_illness_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -10,8 +11,7 @@ class ResultPage extends StatefulWidget {
   _ResultPageState createState() => _ResultPageState();
 }
 
-class _ResultPageState extends State<ResultPage> {  
-
+class _ResultPageState extends State<ResultPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,33 +53,53 @@ class _ResultPageState extends State<ResultPage> {
                 children: <Widget>[
                   Text('Mi Diagnostico'),
                   Text(
-                      new DateFormat.yMd().add_jm().format(new DateTime.now()),
-                      style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold),
-                      ),
-                  SizedBox(
-                    height: 40.0,
+                    new DateFormat.yMd().add_jm().format(new DateTime.now()),
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold),
                   ),
-                  _cardTipo1('Influenza', '98'),
-                  SizedBox(
-                    height: 40.0,
+                  
+                  Column(
+                    children: createRadioListAnswer(),
+
                   ),
-                  _cardTipo1('Cancer de ano', '99'),
-                  SizedBox(
-                    height: 40.0,
-                  ),
-                  _cardTipo1('Influenza', '98'),
                   RaisedButton(
                     child: Text('hola jeje'),
-                    onPressed: (){
-
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ConfirmIllnessWidget(
+                                  listCondition: widget.listcondition)));
                     },
                   )
                 ],
               )),
         ));
+  }
+
+
+  List<Widget> createRadioListAnswer(){
+    List<Widget> radioWidgets = [];
+    for (var i = 0; (i < widget.listcondition.length) ; i++) {  
+      if(i==3){
+        break;
+      }        
+      radioWidgets.add(
+        _cardTipo1(widget.listcondition[i].name, (widget.listcondition[i].probability*100).toString())
+      );
+    }
+    return radioWidgets;
+  }
+
+  List<dynamic> armarLista() {
+    print(widget.listcondition.length);
+    List<dynamic> list= new List();
+    for (var i = 0; i < widget.listcondition.length || i <= 3; i++) {
+      list.add(widget.listcondition[i]);
+    }
+    return list;
   }
 
   Widget _cardTipo1(String enfermedad, String certeza) {
