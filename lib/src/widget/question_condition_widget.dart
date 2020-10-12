@@ -1,6 +1,10 @@
+import 'dart:ui';
+
 import 'package:asistentemedico/src/models/diagnosis_query_model.dart';
+import 'package:asistentemedico/src/models/translate_model.dart';
 import 'package:asistentemedico/src/pages/results_page.dart';
 import 'package:asistentemedico/src/providers/infermedica_provider.dart';
+import 'package:asistentemedico/src/providers/translate_provider.dart';
 import 'package:flutter/material.dart';
 
 class QuestionWidget extends StatefulWidget {
@@ -19,6 +23,11 @@ class _QuestionWidgetState extends State<QuestionWidget> {
   List<dynamic> respuestas = [];
   final infermedicaDiagnosisProvider = new InfermedicaDiagnosisProvider();
   int number;
+  TranslateModel translateModel;
+  final translateProvider = new TranslateProvider();
+
+  /*--- */
+  String newQuestion = "";
 
   setSelectedRadioTile(String valor){
     setState(() {
@@ -26,9 +35,13 @@ class _QuestionWidgetState extends State<QuestionWidget> {
     });
   }
 
+  // void translateQuestion(String question) async{
+  //   this.translateModel = await translateProvider.getTranslation(question);
+  //   this.newQuestion = translateModel.data.translations[0].translatedText;
+  // }
+
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(150.0), // here the desired height
@@ -60,26 +73,47 @@ class _QuestionWidgetState extends State<QuestionWidget> {
         child: Column(
           children: <Widget>[
             SizedBox(height: 50),
-            Padding(padding: EdgeInsets.all(20), child: _cardTipo1(widget.question)),
+            Padding(padding: EdgeInsets.all(20), child: _cardTipo1(newQuestion)),
             SizedBox(height: 30),
             RaisedButton(
               color: Color.fromRGBO(145,220, 201, 1.0),
               child: Text("Listo", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
               onPressed: (){
-                Evidence evidence = new Evidence();
-                evidence.id = selectedRadioTile;
-                evidence.choiceId = "present";
-                widget.listEvidence.add(evidence);
+                if (widget.posibleAnswers.length == 1) {
+                  Evidence evidence = new Evidence();
+                  evidence.id =widget.posibleAnswers[0]["id"];
+                  print("illness" + evidence.id);
+                  if (selectedRadioTile == '1' ) {
+                    evidence.choiceId = "present";
+                  }else if(selectedRadioTile == '2' ){
+                    evidence.choiceId = "absent";
+                  }else if(selectedRadioTile == '3' ){
+                    evidence.choiceId = "unknown";
+                  }else{
+                    evidence.choiceId = "unknown";
+                  }
+                  
+                  widget.listEvidence.add(evidence);
+                }else{
+                  Evidence evidence = new Evidence();
+                  evidence.id = selectedRadioTile;
+                  evidence.choiceId = "present";
+                  widget.listEvidence.add(evidence);
+                }
+
                 DiagnosisQuery diagnosisQuery = new DiagnosisQuery();
                 diagnosisQuery.age = 30;
                 diagnosisQuery.sex = "male";
                 diagnosisQuery.evidence = widget.listEvidence;
+
                 infermedicaDiagnosisProvider.sendCondition(diagnosisQuery).then((responses) => {
                   number = widget.numberOfQuery + 1,
+
                   for (var item in responses.question.items) {
                     respuestas.add(item.toJson()),
                   },
-                  if((number >= 2) || (responses.conditions[0].probability > 0.98)){
+
+                  if((number >= 10) || (responses.conditions[0].probability > 0.98)){
                     Navigator.push(
                       context, 
                       MaterialPageRoute(
@@ -87,12 +121,22 @@ class _QuestionWidgetState extends State<QuestionWidget> {
                       )
                     ),
                   }else{
-                    Navigator.push(
-                      context, 
-                      MaterialPageRoute(
-                        builder: (context)  =>  QuestionWidget(listEvidence: widget.listEvidence, question: responses.question.text, posibleAnswers: respuestas, numberOfQuery: number)
-                      )
-                    ),
+                    translateProvider.getTranslation(responses.question.text).then((questionSpanish) => {
+                      // for (var respuesta in respuestas) {
+                      //   translateProvider.getTranslation(respuesta["name"]).then((alternativaSpanish) => {
+
+                      //   })
+                      // }
+                      for (var i = 0; i < respuestas.length; i++) {
+                        print(respuestas),
+                      }
+                    })
+                    // Navigator.push(
+                    //   context, 
+                    //   MaterialPageRoute(
+                    //     builder: (context)  =>  QuestionWidget(listEvidence: widget.listEvidence, question: responses.question.text, posibleAnswers: respuestas, numberOfQuery: number)
+                    //   )
+                    // ),
                   }
                 });
                 // print(widget.userConditionsList);
@@ -106,18 +150,51 @@ class _QuestionWidgetState extends State<QuestionWidget> {
 
   List<Widget> createRadioListAnswer(){
     List<Widget> radioWidgets = [];
-    for (var answer in widget.posibleAnswers) {
-      radioWidgets.add(
-        RadioListTile(
-          value: answer["id"], 
-          groupValue: selectedRadioTile, 
-          title: Text(answer["name"]),
-          onChanged: (valor){
-            print("Radio pressed: $valor");
-            setSelectedRadioTile(valor);
-          },
-        ),
-      );
+    if (widget.posibleAnswers.length == 1) {
+      Widget rb1 = RadioListTile(
+                    value: "1", 
+                    groupValue: selectedRadioTile, 
+                    title: Text("Si"),
+                    onChanged: (valor){
+                      print("Radio pressed: $valor");
+                      setSelectedRadioTile(valor);
+                    },
+                  );
+      radioWidgets.add(rb1);
+      Widget rb2 = RadioListTile(
+                    value: "2", 
+                    groupValue: selectedRadioTile, 
+                    title: Text("No"),
+                    onChanged: (valor){
+                      print("Radio pressed: $valor");
+                      setSelectedRadioTile(valor);
+                    },
+                  );
+      radioWidgets.add(rb2);
+      Widget rb3 = RadioListTile(
+                    value: "3", 
+                    groupValue: selectedRadioTile, 
+                    title: Text("No sé"),
+                    onChanged: (valor){
+                      print("Radio pressed: $valor");
+                      setSelectedRadioTile(valor);
+                    },
+                  );
+      radioWidgets.add(rb3);
+    }else{
+      for (var answer in widget.posibleAnswers) {
+        radioWidgets.add(
+          RadioListTile(
+            value: answer["id"], 
+            groupValue: selectedRadioTile, 
+            title: Text(answer["name"]),
+            onChanged: (valor){
+              print("Radio pressed: $valor");
+              setSelectedRadioTile(valor);
+            },
+          ),
+        );
+      }
     }
     return radioWidgets;
   }
