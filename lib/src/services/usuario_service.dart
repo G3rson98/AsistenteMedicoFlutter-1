@@ -25,6 +25,9 @@ class UsuarioProvider {
       addIntToSF('id', id);
       addStringToSF('usuario', nombreUsuario);
       addStringToSF('correo', correo);
+      // addStringToSF('genero', correo);
+      // addIntToSF('edad', id);
+      // addIntToSF('carpeta_raiz', id);
 
       SharedPreferences prefs = await SharedPreferences.getInstance();
 
