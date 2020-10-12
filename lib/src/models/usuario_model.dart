@@ -19,6 +19,7 @@ class Usuario {
     this.apellidoPaterno,
     this.apellidoMaterno,
     this.genero,
+    this.fechaNac,
     this.lugarNac,
     this.altura,
     this.peso,
@@ -33,6 +34,7 @@ class Usuario {
   String apellidoPaterno;
   String apellidoMaterno;
   String genero;
+  String fechaNac;
   String lugarNac;
   double altura;
   double peso;
@@ -47,26 +49,45 @@ class Usuario {
         apellidoPaterno: json["apellido_paterno"],
         apellidoMaterno: json["apellido_materno"],
         genero: json["genero"],
+        fechaNac: json["fecha_nac"],
         lugarNac: json["lugar_nac"],
-        altura: json["altura"],
-        peso: json["peso"],
+        altura: (json["altura"] == null)
+            ? null
+            : num.tryParse(json["altura"]).toDouble(),
+        peso: (json["peso"] == null)
+            ? null
+            : num.tryParse(json["peso"]).toDouble(),
       );
 
-  // String toString() {
-  //   return 'Acta Electoral 2020 \n' +
-  //       'Codigo barra: ' +
-  //       this.codigoBarra +
-  //       '\n' +
-  //       'Codigo Verificacion: ' +
-  //       this.codigoVerificacion +
-  //       '\n' +
-  //       'Tipo: ' +
-  //       this.tipo +
-  //       '\n';
-  // }
+  String toString() {
+    return 'Usuario {' +
+        // 'id: ' +
+        // this.id.toString() +
+        ' nombreUsuario: ' +
+        nombreUsuario +
+        ' correo: ' +
+        this.correo +
+        // 'celular: ' +
+        // this.celular.toString() +
+        ' nombre: ' +
+        this.nombre +
+        ' apellidoPaterno: ' +
+        this.apellidoPaterno +
+        ' apellidoMaterno: ' +
+        this.apellidoMaterno +
+        ' genero: ' +
+        this.genero +
+        ' }';
+    // 'altura: ' +
+    // this.altura.toString() +
+    // 'peso: ' +
+    // this.peso.toString() +
+    // 'lugarNac: ' +
+    // this.lugarNac;
+  }
 
   Map<String, dynamic> toJson() => {
-        "id": id,
+        "usuario_id": id,
         "nombre_usuario": nombreUsuario,
         "correo": correo,
         "password": password,
@@ -75,6 +96,7 @@ class Usuario {
         "apellido_paterno": apellidoPaterno,
         "apellido_materno": apellidoMaterno,
         "genero": genero,
+        "fecha_nac": fechaNac,
         "lugar_nac": lugarNac,
         "altura": altura,
         "peso": peso,

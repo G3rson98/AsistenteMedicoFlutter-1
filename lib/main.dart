@@ -1,4 +1,5 @@
 import 'package:asistentemedico/src/pages/login_page.dart';
+import 'package:asistentemedico/src/pages/profile_page.dart';
 import 'package:asistentemedico/src/pages/registrarUsuario_page.dart';
 import 'package:asistentemedico/src/pages/results_page.dart';
 import 'package:asistentemedico/src/pages/search_page.dart';
@@ -28,6 +29,7 @@ class MyApp extends StatelessWidget {
         'informacion': (BuildContext context) => InformacionPage(),
         'scroll': (BuildContext context) => ScrollPage(),
         'begin': (BuildContext context) => ButtomNavigationBar(),
+        'perfil': (BuildContext context) => ProfilePage(),
         //ID DE LA CARPETA RAIZ DEL USUARIO LOGUEADO
         'multimedia': (BuildContext context) => MultimediaPage(1),
         'login': (BuildContext context) => LoginPage(),

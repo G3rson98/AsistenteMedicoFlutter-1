@@ -10,10 +10,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       body: Stack(
         children: <Widget>[
@@ -146,8 +144,8 @@ class _HomePageState extends State<HomePage> {
           children: [
             _crearBotonRedondeado(
                 Colors.orange, Icons.insert_chart, 'Estadísticas', '', context),
-            _crearBotonRedondeado(
-                Colors.purple, Icons.person_outline, 'Perfil', '', context),
+            _crearBotonRedondeado(Colors.purple, Icons.person_outline, 'Perfil',
+                'perfil', context),
           ],
         ),
       ],

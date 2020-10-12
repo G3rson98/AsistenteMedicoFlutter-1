@@ -25,6 +25,9 @@ class UsuarioProvider {
       addIntToSF('id', id);
       addStringToSF('usuario', nombreUsuario);
       addStringToSF('correo', correo);
+      // addStringToSF('genero', correo);
+      // addIntToSF('edad', id);
+      // addIntToSF('carpeta_raiz', id);
 
       SharedPreferences prefs = await SharedPreferences.getInstance();
 
@@ -49,13 +52,25 @@ class UsuarioProvider {
 
   Future<Usuario> getUsuario(int usuarioId) async {
     // http://192.168.1.125:8088/api/carpeta/show?carpeta_id=1
-    final resp = await http.get(
-        '$_url/api/register/show?usuario_id=$usuarioId');
+    final resp =
+        await http.get('$_url/api/register/show?usuario_id=$usuarioId');
     final Map<String, dynamic> decodeData = json.decode(resp.body);
     print(decodeData['data']);
     final Usuario usuario = Usuario.fromJson(decodeData['data']);
-    print(usuario);
-
     return usuario;
+  }
+
+  Future<bool> editarUsuario(Usuario usuario) async {
+    // http://192.168.1.125:8088/api/carpeta/show?carpeta_id=1
+    final resp = await http.put('$_url/api/register/edit',
+        headers: {'Content-Type': 'application/json'},
+        body: usuarioToJson(usuario));
+
+    final decodedData = json.decode(resp.body);
+    print(decodedData);
+    final Map<String, dynamic> decodeData = json.decode(resp.body);
+    print(decodeData['data']);
+    // final Usuario usuario = Usuario.fromJson(decodeData['data']);
+    return true;
   }
 }
