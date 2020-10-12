@@ -25,6 +25,7 @@ class UsuarioProvider {
       addIntToSF('id', id);
       addStringToSF('usuario', nombreUsuario);
       addStringToSF('correo', correo);
+      addAlergias('Alergias', ['gripe','alergia al polvo','migraña']);
 
       SharedPreferences prefs = await SharedPreferences.getInstance();
 
@@ -57,5 +58,10 @@ class UsuarioProvider {
     print(usuario);
 
     return usuario;
+  }
+
+  addAlergias(String clave, List<String> valor) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setStringList(clave, valor);
   }
 }
