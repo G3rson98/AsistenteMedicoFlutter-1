@@ -6,7 +6,7 @@ class TranslateProvider {
 
   final String _url = "https://translation.googleapis.com/language/translate/v2";
 
-  Future<TranslateModel> getTranslation(String text) async {    
+  Future<String> getTranslation(String text) async {    
 
     TranslateModel translateModel = new TranslateModel();
     
@@ -21,6 +21,6 @@ class TranslateProvider {
     var response = await http.get(uri);
     final decodedData = json.decode(response.body);
     translateModel = TranslateModel.fromJson(decodedData);
-    return translateModel;
+    return translateModel.data.translations[0].translatedText;
   }
 }
