@@ -127,7 +127,7 @@ class HomePage extends StatelessWidget {
         TableRow(
           children: [
             _crearBotonRedondeado(Colors.blue, Icons.sentiment_very_dissatisfied ,'Diagnóstico','search',context),
-            _crearBotonRedondeado(Colors.red , Icons.calendar_today,'Calendario','',context),
+            _crearBotonRedondeado(Colors.red , Icons.assignment_ind,'Alergias','alergias',context),
           ],
         ),
         TableRow(
