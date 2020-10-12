@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:asistentemedico/src/models/diagnosis_query_model.dart';
+import 'package:asistentemedico/src/models/diagnosis_response_model.dart';
 import 'package:asistentemedico/src/models/translate_model.dart';
 import 'package:asistentemedico/src/pages/results_page.dart';
 import 'package:asistentemedico/src/providers/infermedica_provider.dart';
@@ -21,6 +22,7 @@ class QuestionWidget extends StatefulWidget {
 class _QuestionWidgetState extends State<QuestionWidget> {
   String selectedRadioTile;
   List<dynamic> respuestas = [];
+  List<Condition> enfermedades = [];
   final infermedicaDiagnosisProvider = new InfermedicaDiagnosisProvider();
   int number;
   // TranslateModel translateModel;
@@ -107,16 +109,26 @@ class _QuestionWidgetState extends State<QuestionWidget> {
 
                 infermedicaDiagnosisProvider.sendCondition(diagnosisQuery).then((responses) => {
                   number = widget.numberOfQuery + 1,
+                  enfermedades = responses.conditions,
+
                   for (var item in responses.question.items) {
                     respuestas.add(item.toJson()),
                   },
+
                   if((number >= 5) || (responses.conditions[0].probability > 0.98)){
-                    Navigator.push(
-                      context, 
-                      MaterialPageRoute(
-                        builder: (context)  =>  ResultPage(listcondition: responses.conditions)
-                      )
-                    ),
+                    for (var i = 0; i < enfermedades.length; i++) {
+                      translateProvider.getTranslation(enfermedades[i].name).then((enfermedadSpanish) => {
+                        enfermedades[i].name = enfermedadSpanish,
+                        if ((i+1) == enfermedades.length) {
+                          Navigator.push(
+                            context, 
+                            MaterialPageRoute(
+                              builder: (context)  =>  ResultPage(listcondition: enfermedades)
+                            )
+                          ),
+                        }
+                      })
+                    },
                   }else{
                     translateProvider.getTranslation(responses.question.text).then((questionSpanish) => {
                       for (var i = 0; i < respuestas.length; i++) {
@@ -207,7 +219,10 @@ class _QuestionWidgetState extends State<QuestionWidget> {
             title: Text('PREGUNTA: ', style: TextStyle(color: Colors.black,fontSize: 22, fontWeight: FontWeight.bold)),
           ),
           SizedBox(height: 60),
-          Text(widget.question, style: TextStyle(color: Colors.black, fontSize: 18, fontWeight: FontWeight.bold)),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(widget.question, style: TextStyle(color: Colors.black, fontSize: 18, fontWeight: FontWeight.bold)),
+          ),
           SizedBox(height: 50),
           Column(
             children: createRadioListAnswer(),
