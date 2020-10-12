@@ -128,7 +128,7 @@ class MultimediaPage extends StatelessWidget {
               ),
               Text(
                 carpeta.nombre,
-                style: TextStyle(fontSize: 15),
+                style: TextStyle(fontSize: 18),
               ),
               Align(
                 alignment: Alignment.bottomRight,
@@ -170,7 +170,7 @@ class MultimediaPage extends StatelessWidget {
               ),
               Text(
                 multi.nombre,
-                style: TextStyle(fontSize: 15),
+                style: TextStyle(fontSize: 18),
               ),
               Align(
                 alignment: Alignment.bottomRight,
