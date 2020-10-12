@@ -23,7 +23,7 @@ class _QuestionWidgetState extends State<QuestionWidget> {
   List<dynamic> respuestas = [];
   final infermedicaDiagnosisProvider = new InfermedicaDiagnosisProvider();
   int number;
-  TranslateModel translateModel;
+  // TranslateModel translateModel;
   final translateProvider = new TranslateProvider();
 
   /*--- */
@@ -92,7 +92,6 @@ class _QuestionWidgetState extends State<QuestionWidget> {
                   }else{
                     evidence.choiceId = "unknown";
                   }
-                  
                   widget.listEvidence.add(evidence);
                 }else{
                   Evidence evidence = new Evidence();
@@ -108,12 +107,10 @@ class _QuestionWidgetState extends State<QuestionWidget> {
 
                 infermedicaDiagnosisProvider.sendCondition(diagnosisQuery).then((responses) => {
                   number = widget.numberOfQuery + 1,
-
                   for (var item in responses.question.items) {
                     respuestas.add(item.toJson()),
                   },
-
-                  if((number >= 10) || (responses.conditions[0].probability > 0.98)){
+                  if((number >= 5) || (responses.conditions[0].probability > 0.98)){
                     Navigator.push(
                       context, 
                       MaterialPageRoute(
@@ -122,21 +119,20 @@ class _QuestionWidgetState extends State<QuestionWidget> {
                     ),
                   }else{
                     translateProvider.getTranslation(responses.question.text).then((questionSpanish) => {
-                      // for (var respuesta in respuestas) {
-                      //   translateProvider.getTranslation(respuesta["name"]).then((alternativaSpanish) => {
-
-                      //   })
-                      // }
                       for (var i = 0; i < respuestas.length; i++) {
-                        print(respuestas),
-                      }
+                        translateProvider.getTranslation(respuestas[i]["name"]).then((value) => {
+                          respuestas[i]["name"] = value,
+                          if ((i+1) == respuestas.length) {
+                            Navigator.push(
+                                context, 
+                                MaterialPageRoute(
+                                  builder: (context)  =>  QuestionWidget(listEvidence: widget.listEvidence, question: questionSpanish, posibleAnswers: respuestas, numberOfQuery: number)
+                                )
+                            ),
+                          }
+                        }),
+                      },
                     })
-                    // Navigator.push(
-                    //   context, 
-                    //   MaterialPageRoute(
-                    //     builder: (context)  =>  QuestionWidget(listEvidence: widget.listEvidence, question: responses.question.text, posibleAnswers: respuestas, numberOfQuery: number)
-                    //   )
-                    // ),
                   }
                 });
                 // print(widget.userConditionsList);
@@ -211,7 +207,7 @@ class _QuestionWidgetState extends State<QuestionWidget> {
             title: Text('PREGUNTA: ', style: TextStyle(color: Colors.black,fontSize: 22, fontWeight: FontWeight.bold)),
           ),
           SizedBox(height: 60),
-          Text(question, style: TextStyle(color: Colors.black, fontSize: 18, fontWeight: FontWeight.bold)),
+          Text(widget.question, style: TextStyle(color: Colors.black, fontSize: 18, fontWeight: FontWeight.bold)),
           SizedBox(height: 50),
           Column(
             children: createRadioListAnswer(),
