@@ -13,7 +13,7 @@ class RegistrarUsuario extends StatefulWidget {
 class _RegistrarUsuarioState extends State<RegistrarUsuario> {
 
   final formRegKey = GlobalKey<FormState>();
-  String _value = 'female';
+  String _value = 'Femenino';
 
   @override
   Widget build(BuildContext context) {
@@ -153,11 +153,11 @@ class _RegistrarUsuarioState extends State<RegistrarUsuario> {
         items: [
                 DropdownMenuItem(
                   child: Text("Femenino"),
-                  value: 'female',
+                  value: 'Femenino',
                 ),
                 DropdownMenuItem(
                   child: Text("Masculino"),
-                  value: 'male',
+                  value: 'Masculino',
                 ),
               ],
         onChanged: (value){
@@ -176,12 +176,12 @@ class _RegistrarUsuarioState extends State<RegistrarUsuario> {
     return RaisedButton(
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 80.0, vertical: 15.0),
-        child: Text('Enviar'),
+        child: Text('Enviar', style: TextStyle(fontSize: 18),),
       ),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(5.0)
       ),
-      elevation: 0.0,
+      elevation: 5.0,
       color: Color.fromRGBO(36, 196, 249, 1.0),
       textColor: Colors.white,
       onPressed: () {},
@@ -212,7 +212,7 @@ class _RegistrarUsuarioState extends State<RegistrarUsuario> {
                   child: Row(
                   children: <Widget>[
                     Text(
-                      'Genero:',
+                      'Género:',
                       style: TextStyle(
                       color: Colors.grey,
                       fontSize: 18,
