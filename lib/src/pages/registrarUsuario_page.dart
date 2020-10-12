@@ -13,6 +13,7 @@ class RegistrarUsuario extends StatefulWidget {
 class _RegistrarUsuarioState extends State<RegistrarUsuario> {
 
   final formRegKey = GlobalKey<FormState>();
+  String _value = 'female';
 
   @override
   Widget build(BuildContext context) {
@@ -132,6 +133,44 @@ class _RegistrarUsuarioState extends State<RegistrarUsuario> {
   
   }
 
+    Widget _crearGenero(){
+    
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 15.0),
+      // padding: const EdgeInsets.only(left: 10.0, right: 10.0),
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(5.0),
+              color: Colors.grey[200],
+          ),
+
+      child: DropdownButton(
+        value: _value,
+        style: TextStyle(
+          color: Color.fromRGBO(36, 247, 188, 1.0), 
+          fontSize: 16, 
+          fontWeight: FontWeight.bold
+        ),
+        items: [
+                DropdownMenuItem(
+                  child: Text("Femenino"),
+                  value: 'female',
+                ),
+                DropdownMenuItem(
+                  child: Text("Masculino"),
+                  value: 'male',
+                ),
+              ],
+        onChanged: (value){
+          setState(() {
+            _value = value;
+            print(_value);
+          });
+        }
+      ),
+    );
+  
+  }
+
   Widget _crearBoton( BuildContext context ){
 
     return RaisedButton(
@@ -168,6 +207,22 @@ class _RegistrarUsuarioState extends State<RegistrarUsuario> {
                 _crearApellidoP(),
                 _crearApellidoM(),
                 _crearPassword(),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 40.0, vertical: 10.0),
+                  child: Row(
+                  children: <Widget>[
+                    Text(
+                      'Genero:',
+                      style: TextStyle(
+                      color: Colors.grey,
+                      fontSize: 18,
+                      ),
+                    ),
+                    SizedBox(width: 30,),
+                    _crearGenero(),
+                  ],
+                  ),
+                ),
                 SizedBox(height: 30.0),
                 _crearBoton(context),    
               ],

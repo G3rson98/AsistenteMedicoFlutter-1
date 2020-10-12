@@ -1,9 +1,11 @@
 import 'package:asistentemedico/src/pages/login_page.dart';
 import 'package:asistentemedico/src/pages/profile_page.dart';
 import 'package:asistentemedico/src/pages/registrarUsuario_page.dart';
+import 'package:asistentemedico/src/pages/results_page.dart';
+import 'package:asistentemedico/src/pages/search_page.dart';
+import 'package:asistentemedico/src/widget/confirm_illness_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
 import 'package:asistentemedico/src/pages/home_page.dart';
 import 'package:asistentemedico/src/pages/scroll_page.dart';
 import 'package:asistentemedico/src/pages/informacion_page.dart';
@@ -32,6 +34,7 @@ class MyApp extends StatelessWidget {
         'multimedia': (BuildContext context) => MultimediaPage(1),
         'login': (BuildContext context) => LoginPage(),
         'registrarUsuario': (BuildContext context) => RegistrarUsuario(),
+        'search': (BuildContext context) => SearchPage(),
       },
     );
   }

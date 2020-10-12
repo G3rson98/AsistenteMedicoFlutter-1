@@ -128,10 +128,8 @@ class _HomePageState extends State<HomePage> {
         //Fila de una tabla
         TableRow(
           children: [
-            _crearBotonRedondeado(Colors.blue,
-                Icons.sentiment_very_dissatisfied, 'Diagnóstico', '', context),
-            _crearBotonRedondeado(
-                Colors.red, Icons.calendar_today, 'Calendario', '', context),
+            _crearBotonRedondeado(Colors.blue, Icons.sentiment_very_dissatisfied ,'Diagnóstico','search',context),
+            _crearBotonRedondeado(Colors.red , Icons.calendar_today,'Calendario','',context),
           ],
         ),
         TableRow(
