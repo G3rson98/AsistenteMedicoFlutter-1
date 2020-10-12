@@ -1,20 +1,27 @@
 import 'package:asistentemedico/src/search/alergia_delegate.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AlergiasPage extends StatefulWidget {
-  final List<String> misAlergias;
+  List<String> misAlergias = [];
   AlergiasPage({Key key, @required this.misAlergias}) : super(key: key);
-  
+
   @override
   _AlergiasPageState createState() => _AlergiasPageState();
 }
 
 class _AlergiasPageState extends State<AlergiasPage> {
+  // Future<List<String>> cargarAlergias() async {
+  //   SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   return prefs.getStringList('Alergias');
+
+  // }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Diagnostico'),
+        title: Text('Alergias'),
         backgroundColor: Colors.indigoAccent,
         actions: <Widget>[
           IconButton(
@@ -25,13 +32,15 @@ class _AlergiasPageState extends State<AlergiasPage> {
           ),
         ],
       ),
-      body: Container(
-        child: Column(
-          children: <Widget>[
-            Column(
-              children: createRadioListAnswer(),
-            )
-          ],
+      body: SingleChildScrollView(
+              child: Container(
+          child: Column(
+            children: <Widget>[
+              Column(
+                children: createRadioListAnswer(),
+              )
+            ],
+          ),
         ),
       ),
     );
@@ -39,7 +48,7 @@ class _AlergiasPageState extends State<AlergiasPage> {
 
   List<Widget> createRadioListAnswer() {
     List<Widget> radioWidgets = [];
-
+    print(widget.misAlergias);
     for (var i = 0; (i < widget.misAlergias.length); i++) {
       radioWidgets
           .add(_cardTipo1(widget.misAlergias[i], 'Usted tiene alergia'));

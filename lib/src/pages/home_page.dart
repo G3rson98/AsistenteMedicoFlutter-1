@@ -1,6 +1,9 @@
+import 'package:asistentemedico/src/pages/alergia_page.dart';
 import 'package:flutter/material.dart';
 import 'dart:ui';
 import 'dart:math';
+
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key key}) : super(key: key);
@@ -176,7 +179,19 @@ class _HomePageState extends State<HomePage> {
                   icon: Icon(icono),
                   color: Colors.white,
                   onPressed: () {
-                    Navigator.of(context).pushNamed(ruta);
+
+                    if (ruta =='alergias') {
+                      cargarAlergias().then((value) {
+                        Navigator.push(
+                        context, 
+                        MaterialPageRoute(
+                          builder: (context)  =>  AlergiasPage(misAlergias: value)
+                        )
+                      );  
+                      });
+                    }else{
+                      Navigator.of(context).pushNamed(ruta);
+                    }
                   },
                 ),
               ),
@@ -191,4 +206,11 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
+
+  Future<List<String>> cargarAlergias() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getStringList('Alergias');
+
+  }
+  
 }
