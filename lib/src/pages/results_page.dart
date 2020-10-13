@@ -65,7 +65,7 @@ class _ResultPageState extends State<ResultPage> {
 
                   ),
                   RaisedButton(
-                    child: Text('hola jeje'),
+                    child: Text('Siguiente'),
                     onPressed: () {
                       Navigator.push(
                           context,

@@ -1,4 +1,5 @@
 import 'package:asistentemedico/src/pages/alergia_page.dart';
+import 'package:asistentemedico/src/pages/historial_page.dart';
 import 'package:asistentemedico/src/pages/login_page.dart';
 import 'package:asistentemedico/src/pages/profile_page.dart';
 import 'package:asistentemedico/src/pages/registrarUsuario_page.dart';
@@ -31,7 +32,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Asistente médico',
       debugShowCheckedModeBanner: false,
-      initialRoute: 'scroll',
+      initialRoute: 'historial',
       routes: {
         'home': (BuildContext context) => HomePage(),
         'informacion': (BuildContext context) => InformacionPage(),
@@ -45,6 +46,7 @@ class MyApp extends StatelessWidget {
         'registrarUsuario': (BuildContext context) => RegistrarUsuario(),
         'search': (BuildContext context) => SearchPage(),
         'alergias': (BuildContext context) => AlergiasPage(misAlergias: []),
+        'historial': (BuildContext context) => HistorialPage(),
       },
     );
   }
