@@ -1,6 +1,7 @@
 import 'package:asistentemedico/src/models/diagnosis_model.dart';
-import 'package:asistentemedico/src/models/diagnosis_response_model.dart';
+import 'package:asistentemedico/src/providers/infermedica_provider.dart';
 import 'package:asistentemedico/src/widget/confirm_illness_widget.dart';
+import 'package:asistentemedico/src/widget/information_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -14,6 +15,7 @@ class ResultPage extends StatefulWidget {
 }
 
 class _ResultPageState extends State<ResultPage> {
+  final infermedicaProvider = new InfermedicaDiagnosisProvider();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -106,8 +108,6 @@ class _ResultPageState extends State<ResultPage> {
 
   Widget _cardTipo1(String enfermedad, String certeza, String id) {
     return Card(
-      //elevation: Sirve para poner sombra a un card, de acuerdo al nivel de elevacion.
-      //shape: sirve para poner el card de diferentes formas: circulares, punteaguados, etc.
       elevation: 10.0,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
       child: Column(
@@ -133,7 +133,16 @@ class _ResultPageState extends State<ResultPage> {
               FlatButton(
                 child: Text('Informacion'),
                 onPressed: () {
-
+                  print(id);
+                  infermedicaProvider.getInformation(id).then((information) => {
+                    print(information),
+                    Navigator.push(
+                          context, 
+                          MaterialPageRoute(
+                            builder: (context)  =>  InformationWidget(informationModel: information)
+                          )
+                    )
+                  });
                 },
               ),
             ],

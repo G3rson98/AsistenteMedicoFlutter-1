@@ -12,17 +12,24 @@ class InformationWidget extends StatefulWidget {
 class _InformationWidgetState extends State<InformationWidget> {
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: <Widget>[
-        Container(
-          color: Colors.white70,
-        ),
-        SingleChildScrollView(
-          child: _cuerpo(),
+    return Scaffold(
+      body: Stack(
+        children: <Widget>[
+          Container(
+            color: Colors.white70,
+          ),
+          SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: _cuerpo(),
+            ),
 
-        )
-      ],
+          )
+        ],
+      ),
     );
+    
+      
   }
 
   Widget _cuerpo(){
@@ -36,8 +43,8 @@ class _InformationWidgetState extends State<InformationWidget> {
           child: CircleAvatar(
             backgroundColor: Colors.blueGrey,
             child: FadeInImage(
-              placeholder: NetworkImage("https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/User_icon_2.svg/768px-User_icon_2.svg.png"), 
-              image: NetworkImage("https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/User_icon_2.svg/768px-User_icon_2.svg.png")),
+              placeholder: NetworkImage("https://cdn.pixabay.com/photo/2017/10/08/19/55/cruz-2831364_960_720.png"), 
+              image: NetworkImage("https://cdn.pixabay.com/photo/2017/10/08/19/55/cruz-2831364_960_720.png")),
             maxRadius: 70.0,
             minRadius: 30.0,
           ),
@@ -72,6 +79,13 @@ class _InformationWidgetState extends State<InformationWidget> {
           padding: const EdgeInsets.all(8.0),
           child: _crearInputConsejo(),
         ),
+        RaisedButton(
+          child: Text("Atrás"),
+          color: Color.fromRGBO(36, 196, 249, 1.0),
+          onPressed: (){
+            Navigator.pop(context);
+          }
+        )
       ],
     );
   }
