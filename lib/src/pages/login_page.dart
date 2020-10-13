@@ -125,8 +125,7 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  void _submit() async{
-
+  void _submit() async {
     print(_bloquearBoton);
 
     formKey.currentState.save();
@@ -141,18 +140,19 @@ class _LoginPageState extends State<LoginPage> {
     print(_bloquearBoton);
 
     var login = usuarioProvider.validarLogin(usuario);
-    
-    if( await login ){
+
+    if (await login) {
       setState(() {
-        _bloquearBoton = true;
+        _bloquearBoton = false;
       });
       Navigator.pushReplacementNamed(context, 'begin');
       // Navigator.pushNamed(context, 'home');
-    }else{
+    } else {
       setState(() {
-        _bloquearBoton = true;
+        _bloquearBoton = false;
       });
-      mostrarSnackbar('Credenciales incorrectas, intente de nuevo', Color.fromRGBO(36, 196, 249, 1.0));
+      mostrarSnackbar('Credenciales incorrectas, intente de nuevo',
+          Color.fromRGBO(36, 196, 249, 1.0));
     }
   }
 

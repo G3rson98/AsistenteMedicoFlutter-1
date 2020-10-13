@@ -131,8 +131,14 @@ class _HomePageState extends State<HomePage> {
         //Fila de una tabla
         TableRow(
           children: [
-            _crearBotonRedondeado(Colors.blue, Icons.sentiment_very_dissatisfied ,'Diagnóstico','search',context),
-            _crearBotonRedondeado(Colors.red , Icons.assignment_ind,'Alergias','alergias',context),
+            _crearBotonRedondeado(
+                Colors.blue,
+                Icons.sentiment_very_dissatisfied,
+                'Diagnóstico',
+                'search',
+                context),
+            _crearBotonRedondeado(Colors.red, Icons.assignment_ind, 'Alergias',
+                'alergias', context),
           ],
         ),
         TableRow(
@@ -145,8 +151,8 @@ class _HomePageState extends State<HomePage> {
         ),
         TableRow(
           children: [
-            _crearBotonRedondeado(
-                Colors.orange, Icons.insert_chart, 'Estadísticas', '', context),
+            _crearBotonRedondeado(Colors.orange, Icons.insert_chart,
+                'Estadísticas', 'estadisticas', context),
             _crearBotonRedondeado(Colors.purple, Icons.person_outline, 'Perfil',
                 'perfil', context),
           ],
@@ -177,17 +183,15 @@ class _HomePageState extends State<HomePage> {
                   icon: Icon(icono),
                   color: Colors.white,
                   onPressed: () {
-
-                    if (ruta =='alergias') {
+                    if (ruta == 'alergias') {
                       cargarAlergias().then((value) {
                         Navigator.push(
-                        context, 
-                        MaterialPageRoute(
-                          builder: (context)  =>  AlergiasPage(misAlergias: value)
-                        )
-                      );  
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    AlergiasPage(misAlergias: value)));
                       });
-                    }else{
+                    } else {
                       Navigator.of(context).pushNamed(ruta);
                     }
                   },
@@ -208,7 +212,5 @@ class _HomePageState extends State<HomePage> {
   Future<List<String>> cargarAlergias() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.getStringList('Alergias');
-
   }
-  
 }

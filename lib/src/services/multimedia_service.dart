@@ -1,3 +1,4 @@
+import 'package:asistentemedico/src/models/estadistical_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
 import 'dart:io';
@@ -97,6 +98,25 @@ class MultimediaProvider {
 
     return multimedias;
   }
+
+  Future<List<EstadisticaModel>> getDatosEstadisticas(int carpetaId) async {
+    // http://192.168.1.125:8088/api/carpeta/show?carpeta_id=1
+    final resp =
+        await http.get('$_dataApi/multimedia/show?carpeta_id=$carpetaId');
+    final Map<String, dynamic> decodeData = json.decode(resp.body);
+    final List<EstadisticaModel> multimedias = new List();
+    if (decodeData['data'] == null) return [];
+    final carpeta = decodeData['data'];
+    //print(decodeData['data']);
+    carpeta.forEach((value) {
+      final c = EstadisticaModel.fromJson(value);
+      multimedias.add(c);
+      print(' value: ' + value.toString());
+    });
+
+    return multimedias;
+  }
+  //EstadisticaModel
 
   Future<bool> crearCarpeta(CarpetaModel newCarpeta) async {
     final url = '$_dataApi/carpeta/create'; // ?auth=${_prefs.token}
