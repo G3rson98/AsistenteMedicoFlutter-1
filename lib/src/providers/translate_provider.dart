@@ -14,7 +14,7 @@ class TranslateProvider {
     var uri = Uri.parse(url);
     uri = uri.replace(queryParameters: {
       "target"  : "es",
-      "key"     : "",
+      "key"     : "AIzaSyAVHitzUIUOPPCfzlDeiLZHIcpNXMb1-VU",
       "q"       : text
     });
 

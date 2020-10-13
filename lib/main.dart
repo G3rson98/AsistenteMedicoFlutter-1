@@ -1,5 +1,6 @@
 import 'package:asistentemedico/src/pages/alergia_page.dart';
 import 'package:asistentemedico/src/pages/estadisticas_pages.dart';
+import 'package:asistentemedico/src/pages/historial_page.dart';
 import 'package:asistentemedico/src/pages/login_page.dart';
 import 'package:asistentemedico/src/pages/profile_page.dart';
 import 'package:asistentemedico/src/pages/registrarUsuario_page.dart';
@@ -48,6 +49,7 @@ class MyApp extends StatelessWidget {
         'alergias': (BuildContext context) => AlergiasPage(misAlergias: []),
         'estadisticas': (BuildContext context) =>
             EstadisticaPage.withSampleData(),
+        'historial': (BuildContext context) => HistorialPage(),
       },
     );
   }

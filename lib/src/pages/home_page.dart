@@ -146,7 +146,7 @@ class _HomePageState extends State<HomePage> {
             _crearBotonRedondeado(Colors.amber, Icons.insert_drive_file,
                 'Documentos', 'multimedia', context),
             _crearBotonRedondeado(
-                Colors.green, Icons.local_hospital, 'Consultas', '', context),
+                Colors.green, Icons.local_hospital, 'Consultas', 'historial', context),
           ],
         ),
         TableRow(
