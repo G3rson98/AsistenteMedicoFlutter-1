@@ -8,6 +8,7 @@ import 'package:asistentemedico/src/pages/results_page.dart';
 import 'package:asistentemedico/src/providers/diagnosis_provider.dart';
 import 'package:asistentemedico/src/providers/infermedica_provider.dart';
 import 'package:asistentemedico/src/providers/translate_provider.dart';
+import 'package:asistentemedico/src/services/usuario_service.dart';
 import 'package:flutter/material.dart';
 
 class QuestionWidget extends StatefulWidget {
@@ -34,6 +35,7 @@ class _QuestionWidgetState extends State<QuestionWidget> {
 
   /*--- */
   String newQuestion = "";
+  UsuarioProvider usu = new UsuarioProvider();
 
   setSelectedRadioTile(String valor){
     setState(() {
@@ -120,7 +122,7 @@ class _QuestionWidgetState extends State<QuestionWidget> {
                     respuestas.add(item.toJson()),
                   },
 
-                  if((number >= 2) || (responses.conditions[0].probability > 0.98)){
+                  if((number >= 3) || (responses.conditions[0].probability > 0.98)){
 
                     for (var i = 0; i < enfermedades.length; i++) {
                       translateProvider.getTranslation(enfermedades[i].name).then((enfermedadSpanish) => {
@@ -129,7 +131,7 @@ class _QuestionWidgetState extends State<QuestionWidget> {
                         diagnosisModel.nombreEnfermedad = enfermedadSpanish,
                         diagnosisModel.probabilidad = enfermedades[i].probability,
                         diagnosisModel.idConsulta = "ill1_"  + DateTime.now().millisecondsSinceEpoch.toString(),
-                        diagnosisModel.usuarioId = '1',
+                        diagnosisModel.usuarioId = usu.id.toString(),
                         diagnosisModel.idEnfermedad = enfermedades[i].id,
                         diagnosisProvider.createDiagnosis(diagnosisModel),
                         listDiagnosisModel.add(diagnosisModel),
