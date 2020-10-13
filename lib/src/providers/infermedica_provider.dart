@@ -14,7 +14,7 @@ class InfermedicaDiagnosisProvider {
 
   final String _urlSymptoms = "https://api.infermedica.com/v2/symptoms";
   final String _urlDiagnosis = "https://api.infermedica.com/v2/diagnosis";
-  final String _urlInformation = "https://api.infermedica.com/v2/conditions/";
+  final String _urlInformation = "https://api.infermedica.com/v2/conditions";
 
   Future<List<dynamic>> getConditions() async {    
     List nombre = new List();
@@ -47,6 +47,7 @@ class InfermedicaDiagnosisProvider {
 
   Future<InformationModel> getInformation(String id) async {
     final url       = '$_urlInformation/$id';
+    print(url);
     final respuesta = await http.get(
       url, 
       headers: {
@@ -56,6 +57,7 @@ class InfermedicaDiagnosisProvider {
     );
     
     final decodedData = json.decode(respuesta.body);
+    print(decodedData);
     informationModel = InformationModel.fromJson(decodedData);
     return informationModel;
   }

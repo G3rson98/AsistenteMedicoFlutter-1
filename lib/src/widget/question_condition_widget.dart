@@ -29,8 +29,8 @@ class _QuestionWidgetState extends State<QuestionWidget> {
   int number;
   // TranslateModel translateModel;
   final translateProvider = new TranslateProvider();
-  DiagnosisModel diagnosisModel = new DiagnosisModel();
   final diagnosisProvider = new DiagnosisProvider();
+  DiagnosisModel diagnosisModel;
 
   /*--- */
   String newQuestion = "";
@@ -124,17 +124,19 @@ class _QuestionWidgetState extends State<QuestionWidget> {
 
                     for (var i = 0; i < enfermedades.length; i++) {
                       translateProvider.getTranslation(enfermedades[i].name).then((enfermedadSpanish) => {
-
+                        diagnosisModel = new DiagnosisModel(),
                         enfermedades[i].name = enfermedadSpanish,
                         diagnosisModel.nombreEnfermedad = enfermedadSpanish,
                         diagnosisModel.probabilidad = enfermedades[i].probability,
                         diagnosisModel.idConsulta = "ill1_"  + DateTime.now().millisecondsSinceEpoch.toString(),
                         diagnosisModel.usuarioId = '1',
                         diagnosisModel.idEnfermedad = enfermedades[i].id,
-                        listDiagnosisModel.add(diagnosisModel),
                         diagnosisProvider.createDiagnosis(diagnosisModel),
+                        listDiagnosisModel.add(diagnosisModel),
 
                         if ((i+1) == enfermedades.length) {
+                          
+                          print(listDiagnosisModel.length),
                           Navigator.push(
                             context, 
                             MaterialPageRoute(
