@@ -11,8 +11,8 @@ class ButtomNavigationBar extends StatefulWidget {
 }
 
 class _ButtomNavigationBarState extends State<ButtomNavigationBar> {
-  int currentIndex =
-      0; // Variable para indicar el index del boton seleccionado.
+  // Variable para indicar el index del boton seleccionado.
+  int currentIndex = 0;
 
   @override
   Widget build(BuildContext context) {

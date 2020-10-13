@@ -5,6 +5,9 @@ import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:flutter_share/flutter_share.dart';
 import 'package:file_picker/file_picker.dart';
 import 'dart:ui';
+import 'package:http/http.dart' as http;
+import 'package:path_provider/path_provider.dart';
+// import 'package:gallery_saver/gallery_saver.dart';
 
 import 'package:asistentemedico/src/models/carpeta_model.dart';
 import 'package:asistentemedico/src/models/multimedia_model.dart';
@@ -157,6 +160,13 @@ class MultimediaPage extends StatelessWidget {
     return GestureDetector(
       onTap: () async {
         print('Traer lo haya en el file');
+        File file = await _downloadFile(multi.ruta, 'foto.jpg');
+        // GallerySaver.saveImage(file.path, albumName: 'Medical')
+        //     .then((bool success) {
+        //   print('Exito');
+        //   print('bool: ' + success.toString());
+
+        // });
         // this.multi.downloadFile(multi.ruta, multi.nombre); '/storage/emulated/0/Download'
       },
       child: Card(
@@ -383,5 +393,22 @@ class MultimediaPage extends StatelessWidget {
             ],
           );
         });
+  }
+
+  Future<File> _downloadFile(String url, String filename) async {
+    http.Client client = new http.Client();
+    var req = await client.get(Uri.parse(url));
+    var bytes = req.bodyBytes;
+    var buffer = bytes.buffer;
+    String dir = (await getApplicationDocumentsDirectory()).path;
+    // '/storage/emulated/0/Download';
+    File file = new File('/storage/emulated/0/Download/$filename');
+
+    file.writeAsBytes(
+        buffer.asUint8List(bytes.offsetInBytes, bytes.lengthInBytes));
+
+    print(file);
+
+    return file;
   }
 }
