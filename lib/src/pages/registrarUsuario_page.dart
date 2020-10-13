@@ -13,11 +13,17 @@ class RegistrarUsuario extends StatefulWidget {
 class _RegistrarUsuarioState extends State<RegistrarUsuario> {
 
   final formRegKey = GlobalKey<FormState>();
+  final scaffoldKeyRegUser = GlobalKey<ScaffoldState>();
+  final usuarioProvider = new UsuarioProvider();
+
   String _value = 'Femenino';
+  bool _bloquearBoton = false;
+  Usuario usuario = new Usuario();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: scaffoldKeyRegUser,
       body:Container(
             padding: EdgeInsets.symmetric(vertical: 60.0, horizontal: 25.0),
             child: Column(
@@ -46,7 +52,7 @@ class _RegistrarUsuarioState extends State<RegistrarUsuario> {
           hintText: 'daniel@gmail.com',
           labelText: 'Correo electrónico'
         ),
-        // onSaved: (value) => usuario.correo = value,
+        onSaved: (value) => usuario.correo = value,
       ),
     );
   
@@ -57,13 +63,12 @@ class _RegistrarUsuarioState extends State<RegistrarUsuario> {
       padding: EdgeInsets.symmetric(horizontal: 25.0),
 
       child: TextFormField(
-        keyboardType: TextInputType.emailAddress,
         decoration: InputDecoration(
           icon: Icon(Icons.account_circle, color: Color.fromRGBO(36, 247, 188, 1.0)),
           hintText: 'Usuario',
           labelText: 'Nombre de usuario'
         ),
-        // onSaved: (value) => usuario.correo = value,
+        onSaved: (value) => usuario.nombreUsuario = value,
       ),
     );
   }
@@ -73,13 +78,12 @@ class _RegistrarUsuarioState extends State<RegistrarUsuario> {
       padding: EdgeInsets.symmetric(horizontal: 25.0),
 
       child: TextFormField(
-        keyboardType: TextInputType.emailAddress,
         decoration: InputDecoration(
           icon: Icon(Icons.done, color: Color.fromRGBO(36, 247, 188, 1.0)),
           hintText: 'Daniel',
-          labelText: 'Nombre'
+          labelText: 'Nombres'
         ),
-        // onSaved: (value) => usuario.correo = value,
+        onSaved: (value) => usuario.nombre = value,
       ),
     );
   }
@@ -89,13 +93,12 @@ class _RegistrarUsuarioState extends State<RegistrarUsuario> {
       padding: EdgeInsets.symmetric(horizontal: 25.0),
 
       child: TextFormField(
-        keyboardType: TextInputType.emailAddress,
         decoration: InputDecoration(
           icon: Icon(Icons.done, color: Color.fromRGBO(36, 247, 188, 1.0)),
           hintText: 'Robles',
           labelText: 'Apellido paterno'
         ),
-        // onSaved: (value) => usuario.correo = value,
+        onSaved: (value) => usuario.apellidoPaterno = value,
       ),
     );
   }
@@ -105,13 +108,76 @@ class _RegistrarUsuarioState extends State<RegistrarUsuario> {
       padding: EdgeInsets.symmetric(horizontal: 25.0),
 
       child: TextFormField(
-        keyboardType: TextInputType.emailAddress,
         decoration: InputDecoration(
           icon: Icon(Icons.done, color: Color.fromRGBO(36, 247, 188, 1.0)),
           hintText: 'Alpire',
           labelText: 'Apellido materno'
         ),
-        // onSaved: (value) => usuario.correo = value,
+        onSaved: (value) => usuario.apellidoMaterno = value,
+      ),
+    );
+  }
+
+  Widget _crearCelular(){
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 25.0),
+
+      child: TextFormField(
+        keyboardType: TextInputType.phone,
+        decoration: InputDecoration(
+          icon: Icon(Icons.phone, color: Color.fromRGBO(36, 247, 188, 1.0)),
+          hintText: '7283193',
+          labelText: 'Nro. Celular'
+        ),
+        onSaved: (value) => usuario.celular = int.parse(value),
+      ),
+    );
+  }
+
+  Widget _crearFechaNac(){
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 25.0),
+
+      child: TextFormField(
+        keyboardType: TextInputType.datetime,
+        decoration: InputDecoration(
+          icon: Icon(Icons.date_range, color: Color.fromRGBO(36, 247, 188, 1.0)),
+          hintText: 'AAAA-mm-dd',
+          labelText: 'Fecha de nacimiento'
+        ),
+        onSaved: (value) => usuario.fechaNac = value,
+      ),
+    );
+  }
+
+  Widget _crearAltura(){
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 25.0),
+
+      child: TextFormField(
+        keyboardType: TextInputType.number,
+        decoration: InputDecoration(
+          icon: Icon(Icons.chevron_right, color: Color.fromRGBO(36, 247, 188, 1.0)),
+          hintText: '1.70',
+          labelText: 'Altura'
+        ),
+        onSaved: (value) => usuario.altura = double.parse(value),
+      ),
+    );
+  }
+
+  Widget _crearPeso(){
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 25.0),
+
+      child: TextFormField(
+        keyboardType: TextInputType.number,
+        decoration: InputDecoration(
+          icon: Icon(Icons.chevron_right, color: Color.fromRGBO(36, 247, 188, 1.0)),
+          hintText: '65.5',
+          labelText: 'Peso'
+        ),
+        onSaved: (value) => usuario.peso = double.parse(value),
       ),
     );
   }
@@ -127,7 +193,7 @@ class _RegistrarUsuarioState extends State<RegistrarUsuario> {
           icon: Icon(Icons.lock, color: Color.fromRGBO(36, 247, 188, 1.0)),
           labelText: 'Contraseña',
         ),
-        // onSaved: (value) => usuario.password = value,
+        onSaved: (value) => usuario.password = value,
       ),
     );
   
@@ -163,6 +229,7 @@ class _RegistrarUsuarioState extends State<RegistrarUsuario> {
         onChanged: (value){
           setState(() {
             _value = value;
+            usuario.genero=_value;
             print(_value);
           });
         }
@@ -184,8 +251,8 @@ class _RegistrarUsuarioState extends State<RegistrarUsuario> {
       elevation: 5.0,
       color: Color.fromRGBO(36, 196, 249, 1.0),
       textColor: Colors.white,
-      onPressed: () {},
-      // onPressed: (_bloquearBoton) ? null : _submit,
+      // onPressed: () {},
+      onPressed: (_bloquearBoton) ? null : _submit,
       //()=> Navigator.pushNamed(context, 'home')
     );
 
@@ -207,6 +274,10 @@ class _RegistrarUsuarioState extends State<RegistrarUsuario> {
                 _crearApellidoP(),
                 _crearApellidoM(),
                 _crearPassword(),
+                _crearCelular(),
+                _crearFechaNac(),
+                _crearPeso(),
+                _crearAltura(),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 40.0, vertical: 10.0),
                   child: Row(
@@ -232,6 +303,47 @@ class _RegistrarUsuarioState extends State<RegistrarUsuario> {
       ),
     );
 
+  }
+
+  void _submit() async{
+
+    print(_bloquearBoton);
+
+    formRegKey.currentState.save();
+
+    print(usuario.correo);
+    print(usuario.password);
+
+    setState(() {
+      _bloquearBoton = true;
+    });
+
+    print(_bloquearBoton);
+
+    var regUser = usuarioProvider.insertarUsuario(usuario);
+    
+    if( await regUser ){
+      setState(() {
+        _bloquearBoton = true;
+      });
+      mostrarSnackbar2('Usuario creado con éxito', Color.fromRGBO(36, 196, 249, 1.0));
+      Navigator.pop(context);
+    }else{
+      setState(() {
+        _bloquearBoton = true;
+      });
+      mostrarSnackbar2('Error al crear el usuario', Color.fromRGBO(36, 196, 249, 1.0));
+    }
+  }
+
+  void mostrarSnackbar2(String mensaje, Color colorBG) {
+    final snackbarReg = SnackBar(
+      content: Text(mensaje, style: TextStyle(color: Colors.white)),
+      duration: Duration(milliseconds: 2500),
+      backgroundColor: colorBG,
+    );
+
+    scaffoldKeyRegUser.currentState.showSnackBar(snackbarReg);
   }
 
 }

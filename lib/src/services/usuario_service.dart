@@ -113,4 +113,38 @@ class UsuarioProvider {
   get carpetaRaiz {
     return _prefs.getInt('carpeta_raiz');
   }
+
+  Future<bool> insertarUsuario(Usuario usuario) async {
+    final url = '$_url/api/register';
+
+    // print(usuario.toJson());
+
+    if (usuario.correo != null &&
+        usuario.nombreUsuario != null &&
+        usuario.nombre != null &&
+        usuario.apellidoMaterno != null &&
+        usuario.apellidoPaterno != null &&
+        usuario.password != null &&
+        usuario.altura != null &&
+        usuario.peso != null &&
+        usuario.fechaNac != null &&
+        usuario.celular != null) {
+      final resp = await http.post(url,
+          headers: {'Content-Type': 'application/json'},
+          body: usuarioToJson(usuario));
+
+      final decodedData = json.decode(resp.body);
+      print(decodedData);
+
+      if (decodedData['exito'] == true) {
+        print(true);
+        return true;
+      } else {
+        print(false);
+        return false;
+      }
+    } else {
+      return false;
+    }
+  }
 }
