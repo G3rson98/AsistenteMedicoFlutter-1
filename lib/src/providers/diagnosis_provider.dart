@@ -5,7 +5,6 @@ import 'package:http/http.dart' as http;
 class DiagnosisProvider {
 
   final String _url = "https://lit-dawn-93061.herokuapp.com/api/diagnostico/create";
-  // DiagnosisModel diagnosisModel;
 
   Future<bool> createDiagnosis(DiagnosisModel diagnosisModel) async {    
     print("Davdi");
@@ -30,16 +29,13 @@ class DiagnosisProvider {
   }
 
   Future<bool> updateDiagnosis(DiagnosisModel diagnosisModel) async {    
-    final url       = '$_url/';
-    final respuesta = await http.post(
+    final url       = 'https://lit-dawn-93061.herokuapp.com/api/diagnostico/edit';
+    final respuesta = await http.put(
       url, 
       headers: {'Content-Type': 'application/json'},
       body:  json.encode({
-        "nombre_enfermedad" : diagnosisModel.nombreEnfermedad,
-        "probabilidad"      : diagnosisModel.probabilidad,
-        "id_consulta"       : diagnosisModel.idConsulta,
-        "usuario_id"        : diagnosisModel.usuarioId,
-        "id_enfermedad"     : diagnosisModel.idEnfermedad
+        "diagnostico_id" : 1,
+        "confirmacion"      : true
       })
     );   
     final encoded = json.encode(respuesta.body);
