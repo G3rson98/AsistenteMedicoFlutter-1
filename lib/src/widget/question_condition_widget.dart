@@ -1,9 +1,11 @@
 import 'dart:ui';
 
+import 'package:asistentemedico/src/models/diagnosis_model.dart';
 import 'package:asistentemedico/src/models/diagnosis_query_model.dart';
 import 'package:asistentemedico/src/models/diagnosis_response_model.dart';
 import 'package:asistentemedico/src/models/translate_model.dart';
 import 'package:asistentemedico/src/pages/results_page.dart';
+import 'package:asistentemedico/src/providers/diagnosis_provider.dart';
 import 'package:asistentemedico/src/providers/infermedica_provider.dart';
 import 'package:asistentemedico/src/providers/translate_provider.dart';
 import 'package:flutter/material.dart';
@@ -27,6 +29,8 @@ class _QuestionWidgetState extends State<QuestionWidget> {
   int number;
   // TranslateModel translateModel;
   final translateProvider = new TranslateProvider();
+  DiagnosisModel diagnosisModel = new DiagnosisModel();
+  final diagnosisProvider = new DiagnosisProvider();
 
   /*--- */
   String newQuestion = "";
@@ -106,6 +110,7 @@ class _QuestionWidgetState extends State<QuestionWidget> {
                 diagnosisQuery.age = 30;
                 diagnosisQuery.sex = "male";
                 diagnosisQuery.evidence = widget.listEvidence;
+                List<DiagnosisModel> listDiagnosisModel = [];
 
                 infermedicaDiagnosisProvider.sendCondition(diagnosisQuery).then((responses) => {
                   number = widget.numberOfQuery + 1,
@@ -115,20 +120,32 @@ class _QuestionWidgetState extends State<QuestionWidget> {
                     respuestas.add(item.toJson()),
                   },
 
-                  if((number >= 5) || (responses.conditions[0].probability > 0.98)){
+                  if((number >= 2) || (responses.conditions[0].probability > 0.98)){
+
                     for (var i = 0; i < enfermedades.length; i++) {
                       translateProvider.getTranslation(enfermedades[i].name).then((enfermedadSpanish) => {
+
                         enfermedades[i].name = enfermedadSpanish,
+                        diagnosisModel.nombreEnfermedad = enfermedadSpanish,
+                        diagnosisModel.probabilidad = enfermedades[i].probability,
+                        diagnosisModel.idConsulta = "ill1_"  + DateTime.now().millisecondsSinceEpoch.toString(),
+                        diagnosisModel.usuarioId = '1',
+                        diagnosisModel.idEnfermedad = enfermedades[i].id,
+                        listDiagnosisModel.add(diagnosisModel),
+                        diagnosisProvider.createDiagnosis(diagnosisModel),
+
                         if ((i+1) == enfermedades.length) {
                           Navigator.push(
                             context, 
                             MaterialPageRoute(
-                              builder: (context)  =>  ResultPage(listcondition: enfermedades)
+                              builder: (context)  =>  ResultPage(listDiagnosisModel: listDiagnosisModel)
                             )
                           ),
                         }
+                        
                       })
                     },
+
                   }else{
                     translateProvider.getTranslation(responses.question.text).then((questionSpanish) => {
                       for (var i = 0; i < respuestas.length; i++) {

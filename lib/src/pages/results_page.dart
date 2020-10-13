@@ -1,11 +1,13 @@
+import 'package:asistentemedico/src/models/diagnosis_model.dart';
 import 'package:asistentemedico/src/models/diagnosis_response_model.dart';
 import 'package:asistentemedico/src/widget/confirm_illness_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class ResultPage extends StatefulWidget {
-  final List<Condition> listcondition;
-  ResultPage({Key key, @required this.listcondition}) : super(key: key);
+  // final List<Condition> listcondition;
+  final List<DiagnosisModel> listDiagnosisModel;
+  ResultPage({Key key, @required this.listDiagnosisModel}) : super(key: key);
 
   @override
   _ResultPageState createState() => _ResultPageState();
@@ -65,13 +67,13 @@ class _ResultPageState extends State<ResultPage> {
 
                   ),
                   RaisedButton(
-                    child: Text('hola jeje'),
+                    child: Text('Confirmar diagnóstico'),
                     onPressed: () {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
                               builder: (context) => ConfirmIllnessWidget(
-                                  listCondition: widget.listcondition)));
+                                  listCondition: widget.listDiagnosisModel)));
                     },
                   )
                 ],
@@ -82,27 +84,27 @@ class _ResultPageState extends State<ResultPage> {
 
   List<Widget> createRadioListAnswer(){
     List<Widget> radioWidgets = [];
-    for (var i = 0; (i < widget.listcondition.length) ; i++) {  
+    for (var i = 0; (i < widget.listDiagnosisModel.length) ; i++) {  
       if(i==3){
         break;
       }        
       radioWidgets.add(
-        _cardTipo1(widget.listcondition[i].name, (widget.listcondition[i].probability*100).toString())
+        _cardTipo1(widget.listDiagnosisModel[i].nombreEnfermedad, (widget.listDiagnosisModel[i].probabilidad*100).toString(), widget.listDiagnosisModel[i].idEnfermedad)
       );
     }
     return radioWidgets;
   }
 
   List<dynamic> armarLista() {
-    print(widget.listcondition.length);
+    print(widget.listDiagnosisModel.length);
     List<dynamic> list= new List();
-    for (var i = 0; i < widget.listcondition.length || i <= 3; i++) {
-      list.add(widget.listcondition[i]);
+    for (var i = 0; i < widget.listDiagnosisModel.length || i <= 3; i++) {
+      list.add(widget.listDiagnosisModel[i]);
     }
     return list;
   }
 
-  Widget _cardTipo1(String enfermedad, String certeza) {
+  Widget _cardTipo1(String enfermedad, String certeza, String id) {
     return Card(
       //elevation: Sirve para poner sombra a un card, de acuerdo al nivel de elevacion.
       //shape: sirve para poner el card de diferentes formas: circulares, punteaguados, etc.
@@ -130,7 +132,9 @@ class _ResultPageState extends State<ResultPage> {
             children: <Widget>[
               FlatButton(
                 child: Text('Informacion'),
-                onPressed: () {},
+                onPressed: () {
+
+                },
               ),
             ],
           ),

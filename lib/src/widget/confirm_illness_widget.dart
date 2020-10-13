@@ -1,3 +1,4 @@
+import 'package:asistentemedico/src/models/diagnosis_model.dart';
 import 'package:asistentemedico/src/models/diagnosis_response_model.dart';
 import 'package:asistentemedico/src/providers/translate_provider.dart';
 import 'package:flutter/material.dart';
@@ -5,7 +6,7 @@ import 'package:flutter/material.dart';
 class ConfirmIllnessWidget extends StatefulWidget {
   const ConfirmIllnessWidget({Key key, @required this.listCondition})
       : super(key: key);
-  final List<Condition> listCondition;
+  final List<DiagnosisModel> listCondition;
 
   @override
   _ConfirmIllnessWidgetState createState() => _ConfirmIllnessWidgetState();
@@ -100,12 +101,15 @@ class _ConfirmIllnessWidgetState extends State<ConfirmIllnessWidget> {
             children: <Widget>[
               FlatButton(
                 child: Text('Cancelar'),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.of(context).pushNamed('begin');
+                },
               ),
               FlatButton(
                 child: Text('Confirmar'),
                 onPressed: () {
                   translateProvider.getTranslation("Hi my name is Daniel");
+                  alertaSuccess(context);
                 },
               ),
             ],
@@ -121,10 +125,10 @@ class _ConfirmIllnessWidgetState extends State<ConfirmIllnessWidget> {
     for (var condition in widget.listCondition) {
       radioWidgets.add(
         RadioListTile(
-          value: condition.id,
+          value: condition.idEnfermedad,
           groupValue: selectedRadioTile,
-          title: Text(condition.name),
-          subtitle: Text(condition.commonName),
+          title: Text(condition.nombreEnfermedad),
+          subtitle: Text(condition.probabilidad.toString()),
           onChanged: (valor) {
             print("Radio pressed: $valor");
             setSelectedRadioTile(valor);
@@ -133,5 +137,41 @@ class _ConfirmIllnessWidgetState extends State<ConfirmIllnessWidget> {
       );
     }
     return radioWidgets;
+  }
+
+  void alertaSuccess(BuildContext context){
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) { 
+        return AlertDialog(
+          backgroundColor: Colors.white,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)) ,
+          title: Text('Alerta: '),
+          content: SingleChildScrollView(
+            child: Column(
+              children: <Widget>[
+                Image(
+                  image: NetworkImage("https://www.pngkit.com/png/full/12-120360_check-mark-right-and-wrong-signs-png.png"),
+                  height: 90,
+                  width: 90,
+                ),
+                SizedBox(height: 5),
+                Text("Se registró correctamente el diagnóstico. ",style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 18)),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('Aceptar'),
+              onPressed: (){
+                Navigator.of(context).pushNamed('begin');
+                
+              },
+            ),
+          ],
+        );
+      }
+    );
   }
 }
