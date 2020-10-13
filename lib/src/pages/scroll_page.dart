@@ -72,8 +72,8 @@ class _ScrollPageState extends State<ScrollPage> {
         Column(
           mainAxisAlignment: MainAxisAlignment.end,
           children: <Widget>[
-            Text('24/07/20', style: estiloTexto),
-            Text('Viernes', style: TextStyle(fontSize: 20.0, color: Colors.white)),
+            Text('13/10/20', style: estiloTexto),
+            Text('Martes', style: TextStyle(fontSize: 20.0, color: Colors.white)),
             SizedBox(height: 100.0),
             Icon(Icons.keyboard_arrow_down, size: 70.0, color: Colors.white)
           ],
