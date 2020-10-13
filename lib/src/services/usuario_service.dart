@@ -28,6 +28,7 @@ class UsuarioProvider {
       // addStringToSF('genero', correo);
       // addIntToSF('edad', id);
       // addIntToSF('carpeta_raiz', id);
+      addAlergias('Alergias', ['gripe','alergia al polvo','migraña']);
 
       SharedPreferences prefs = await SharedPreferences.getInstance();
 
@@ -108,5 +109,12 @@ class UsuarioProvider {
         }else{
           return false;
         }
-  }
+
+
+}
+
+addAlergias(String clave, List<String> valor) async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  prefs.setStringList(clave, valor);
+}
 }
