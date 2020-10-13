@@ -15,12 +15,15 @@ class _HistorialPageState extends State<HistorialPage> {
   String nombre;
   String correo;
   String sexo;
+  int id;
   SharedPreferences _prefs;
+  List<dynamic> enfermedades;
+  
+
 
   @override
   Widget build(BuildContext context) {
-    cargardatos();
-    getHistorial();
+    getHistorial();   
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(150.0), // here the desired height
@@ -71,14 +74,14 @@ class _HistorialPageState extends State<HistorialPage> {
                 ],
               ),
               Text(
-                'Joaquin@gmail.com',
+                this.nombre,
                 style: TextStyle(
                     color: Colors.white,
                     fontSize: 17,
                     fontWeight: FontWeight.bold),
               ),
               Text(
-                'Masculino',
+                this.sexo,
                 style: TextStyle(
                     color: Colors.white,
                     fontSize: 17,
@@ -101,26 +104,31 @@ class _HistorialPageState extends State<HistorialPage> {
     );
   }
 
-  Future<void> cargardatos() async {
-    _prefs = await SharedPreferences.getInstance();
+  cargardatos() async {
+    _prefs = await SharedPreferences.getInstance();    
     this.correo= _prefs.getString('correo');
     this.sexo = _prefs.getString('genero');
+    this.id = _prefs.getInt('id');
+
+    
   }
 
-  Future<void> getHistorial() async {
-    final idUsuario=_prefs.getString('id');
-    final url ='https://lit-dawn-93061.herokuapp.com/api/diagnostico/show?usuario_id=$idUsuario';
+   getHistorial() async {
+    await cargardatos();
+    String idUsu= this.id.toString();
+    final url ='https://lit-dawn-93061.herokuapp.com/api/diagnostico/show?usuario_id=$idUsu';
     final resp = await http.get(url,
         headers: {'Content-Type': 'application/json'});
 
     final decodedData = json.decode(resp.body);
-    print(decodedData);
+    this.enfermedades = decodedData['data'];
+    print(enfermedades);
   }
 
   List<Widget> createRadioListAnswer() {
     List<Widget> radioWidgets = [];
-    for (var i = 0; (i < 3); i++) {
-      radioWidgets.add(_cardTipo1('sore throath', '98', '2020-10-11'));
+    for (var i = 0; (i < this.enfermedades.length); i++) {
+      radioWidgets.add(_cardTipo1('hhhh', '98', '2020-10-11'));
     }
     return radioWidgets;
   }
