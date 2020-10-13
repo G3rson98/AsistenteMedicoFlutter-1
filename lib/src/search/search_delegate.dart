@@ -1,5 +1,6 @@
 import 'package:asistentemedico/src/models/diagnosis_query_model.dart';
 import 'package:asistentemedico/src/providers/infermedica_provider.dart';
+import 'package:asistentemedico/src/providers/translate_provider.dart';
 import 'package:asistentemedico/src/widget/question_condition_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -22,6 +23,10 @@ class DataSearch extends SearchDelegate {
     'Dolor de estomago',
     'Dolor de cabeza'
   ];
+
+  final translateProvider = new TranslateProvider();
+
+  List<String> preguntasEs;
   //////////////////////////////////////////
   ///
   ///
@@ -29,12 +34,22 @@ class DataSearch extends SearchDelegate {
     this.objSintomas = await InfermedicaDiagnosisProvider().getConditions();
     this.preguntas = new List();
     this.ids = new List();
+
+    this.preguntasEs = new List();// lista en español
+
     objSintomas.forEach((element) {
+      
       preguntas.add(element[0]);
       ids.add(element[1]);
     });
-    print(preguntas);
-    print(ids);    
+
+    traducir();
+    // print(preguntas);
+    // print(ids);    
+  }
+
+  void traducir() async{
+      String a= '';
   }
 
   @override
@@ -74,12 +89,21 @@ class DataSearch extends SearchDelegate {
   Widget buildSuggestions(BuildContext context) {
     //son las sugerencias cuando la persona escribe
     getDatos();
+    // preguntas.forEach((element) {
+    //   translateProvider.getTranslation(element).then((value) {
+    //     this.preguntasEs.add(value);
+    //   });
+    // });
     
     final listaSugerida =  (query.isEmpty)?
                             preguntasRecientes
                           : preguntas.where((p) => p.toLowerCase().startsWith(query.toLowerCase())
                           ).toList();
-    
+        // final listaSugerida =  (query.isEmpty)?
+        //                     preguntasRecientes
+        //                   : 
+        //                   preguntasEs.where((p) => p.toLowerCase().startsWith(query.toLowerCase())
+        //                   ).toList();
 
 
     return ListView.builder(
@@ -105,12 +129,21 @@ class DataSearch extends SearchDelegate {
               for (var item in responses.question.items) {
                     respuestas.add(item.toJson()),
               },
-              Navigator.push(
-                      context, 
-                      MaterialPageRoute(
-                        builder: (context)  =>  QuestionWidget(listEvidence: this.evid, question: responses.question.text, posibleAnswers: respuestas, numberOfQuery: number)
-                      )
-                    ),
+              translateProvider.getTranslation(responses.question.text).then((questionSpanish) => {
+                      for (var i = 0; i < respuestas.length; i++) {
+                        translateProvider.getTranslation(respuestas[i]["name"]).then((value) => {
+                          respuestas[i]["name"] = value,
+                          if ((i+1) == respuestas.length) {
+                            Navigator.push(
+                                context, 
+                                MaterialPageRoute(
+                                  builder: (context)  =>  QuestionWidget(listEvidence: this.evid, question: questionSpanish, posibleAnswers: respuestas, numberOfQuery: number)
+                                )
+                            ),
+                          }
+                        }),
+                      },
+                    })
             });
             
           },
