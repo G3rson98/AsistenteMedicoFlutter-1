@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:asistentemedico/src/services/usuario_service.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
@@ -12,18 +13,22 @@ class HistorialPage extends StatefulWidget {
 }
 
 class _HistorialPageState extends State<HistorialPage> {
-  String nombre;
   String correo;
   String sexo;
   int id;
   SharedPreferences _prefs;
-  List<dynamic> enfermedades;
-  
 
+  UsuarioProvider usu = new UsuarioProvider();
+
+  List<dynamic> enfermedades;
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    getHistorial();   
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(150.0), // here the desired height
@@ -74,14 +79,14 @@ class _HistorialPageState extends State<HistorialPage> {
                 ],
               ),
               Text(
-                this.nombre,
+                usu.correo,
                 style: TextStyle(
                     color: Colors.white,
                     fontSize: 17,
                     fontWeight: FontWeight.bold),
               ),
               Text(
-                this.sexo,
+                usu.genero,
                 style: TextStyle(
                     color: Colors.white,
                     fontSize: 17,
@@ -96,7 +101,9 @@ class _HistorialPageState extends State<HistorialPage> {
         children: <Widget>[
           SizedBox(height: 50),
           Column(
-            children: createRadioListAnswer(),
+            children: <Widget>[
+              armarHist(context),
+            ],
           ),
           SizedBox(height: 30),
         ],
@@ -104,25 +111,39 @@ class _HistorialPageState extends State<HistorialPage> {
     );
   }
 
-  cargardatos() async {
-    _prefs = await SharedPreferences.getInstance();    
-    this.correo= _prefs.getString('correo');
-    this.sexo = _prefs.getString('genero');
-    this.id = _prefs.getInt('id');
+  // Future<Map<String,dynamic>> cargardatos() async {
+  //   Map <String,dynamic> temp ;
+  //   _prefs = await SharedPreferences.getInstance();
+  //   temp['correo']= _prefs.getString('correo');
+  //   temp['genero'] = _prefs.getString('genero');
+  //   temp['id'] = _prefs.getInt('id');
 
-    
-  }
+  //   return temp;
+  // }
 
-   getHistorial() async {
-    await cargardatos();
-    String idUsu= this.id.toString();
-    final url ='https://lit-dawn-93061.herokuapp.com/api/diagnostico/show?usuario_id=$idUsu';
-    final resp = await http.get(url,
-        headers: {'Content-Type': 'application/json'});
-
-    final decodedData = json.decode(resp.body);
-    this.enfermedades = decodedData['data'];
-    print(enfermedades);
+  Widget armarHist(BuildContext context) {
+    return FutureBuilder(
+      future: usu.getHistorial(),
+      builder: (BuildContext context, AsyncSnapshot<List<dynamic>>snapshot) {
+        if (snapshot.hasData) {
+          var a = snapshot.data;
+          final List<Widget> radioWidgets = [] ;
+          a.forEach((element) {
+            radioWidgets.add(_cardTipo1(element['nombre_enfermedad'], element['probabilidad'], element['fecha']));
+            print(element);
+          });
+          return Container(
+            child: Column(
+              children: radioWidgets,
+            ),
+          );
+        }else{
+          return Center(
+                    child: CircularProgressIndicator(),
+                  );
+        }
+      },
+    );
   }
 
   List<Widget> createRadioListAnswer() {

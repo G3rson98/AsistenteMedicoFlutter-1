@@ -27,9 +27,7 @@ class _SearchPageState extends State<SearchPage> {
         ],
 
       ),
-      body: FloatingActionButton(onPressed: (){
-      var infermedicaProvider = InfermedicaDiagnosisProvider().getConditions();
-      }),
+      body: Container(),
     );
   }
 }

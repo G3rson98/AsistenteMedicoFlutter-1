@@ -153,4 +153,19 @@ class UsuarioProvider {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setStringList(clave, valor);
   }
+
+  Future<List<dynamic>> getHistorial() async {
+    List<dynamic> enfermedades = new List();
+    //await cargardatos();
+    String idUsu = this.id.toString();
+    final url =
+        'https://lit-dawn-93061.herokuapp.com/api/diagnostico/show?usuario_id=$idUsu';
+    final resp =
+        await http.get(url, headers: {'Content-Type': 'application/json'});
+
+    final decodedData = json.decode(resp.body);
+    enfermedades = decodedData['data'];
+    print(enfermedades);
+    return enfermedades;
+  }
 }
