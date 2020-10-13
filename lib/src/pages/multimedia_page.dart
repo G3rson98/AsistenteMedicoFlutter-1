@@ -138,6 +138,7 @@ class MultimediaPage extends StatelessWidget {
                       icon: Icon(Icons.close),
                       iconSize: 20,
                       onPressed: () async {
+                        alertaEliminarCarpeta(context, carpeta);
                         print('Eliminar');
                       },
                       color: Color.fromRGBO(36, 247, 188, 1.0),
@@ -154,8 +155,9 @@ class MultimediaPage extends StatelessWidget {
 
   Widget _crearCardMultimedia(BuildContext context, MultimediaModel multi) {
     return GestureDetector(
-      onTap: () {
+      onTap: () async {
         print('Traer lo haya en el file');
+        // this.multi.downloadFile(multi.ruta, multi.nombre); '/storage/emulated/0/Download'
       },
       child: Card(
         elevation: 10,
@@ -310,8 +312,9 @@ class MultimediaPage extends StatelessWidget {
 
     if (result != null) {
       File file = File(result.files.single.path);
-      String ruta = await this.multi.subirMultimedia(file);
-      // 'https://res.cloudinary.com/dxfnjrouy/image/upload/v1602424207/zynqwlrg8hry6pkjo8f4.jpg';
+      String ruta =
+          'https://res.cloudinary.com/dxfnjrouy/image/upload/v1602424207/zynqwlrg8hry6pkjo8f4.jpg'; // await this.multi.subirMultimedia(file);
+
       MultimediaModel m = new MultimediaModel(
           nombre: "tomografia", ruta: ruta, fkCarpeta: this.carpetaID);
 
@@ -343,5 +346,42 @@ class MultimediaPage extends StatelessWidget {
         text: model.nombre,
         linkUrl: model.ruta,
         chooserTitle: 'Seleccione un Medio');
+  }
+
+  void alertaEliminarCarpeta(BuildContext context, CarpetaModel carpeta) {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text('Desea eliminar la carpeta?'),
+            content: Text('se eliminara con todo su contenido.'),
+            actions: <Widget>[
+              FlatButton(
+                child: Text('cancel'),
+                onPressed: () {
+                  print('cancelado');
+                  Navigator.of(context).pop();
+                },
+              ),
+              FlatButton(
+                child: Text('Ok'),
+                onPressed: () async {
+                  bool bandera = await this
+                      .multi
+                      .eliminarCarpeta(this.carpetaID, carpeta.id);
+                  if (bandera) {
+                    print('eliminado');
+                    Navigator.of(context).pop();
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => MultimediaPage(this.carpetaID),
+                      ),
+                    );
+                  }
+                },
+              )
+            ],
+          );
+        });
   }
 }

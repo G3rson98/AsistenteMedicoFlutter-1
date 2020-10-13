@@ -7,6 +7,21 @@ import 'package:asistentemedico/src/models/usuario_model.dart';
 class UsuarioProvider {
   final String _url = 'https://lit-dawn-93061.herokuapp.com';
 
+  static final UsuarioProvider _instancia = new UsuarioProvider._internal();
+
+  UsuarioProvider._internal();
+
+  SharedPreferences _prefs;
+
+  //Constructor factory o normal
+  factory UsuarioProvider() {
+    return _instancia;
+  }
+
+  initPrefs() async {
+    _prefs = await SharedPreferences.getInstance();
+  }
+
   Future<bool> validarLogin(Usuario usuario) async {
     final url = '$_url/api/login';
 
@@ -25,29 +40,20 @@ class UsuarioProvider {
       addIntToSF('id', id);
       addStringToSF('usuario', nombreUsuario);
       addStringToSF('correo', correo);
-      // addStringToSF('genero', correo);
-      // addIntToSF('edad', id);
-      // addIntToSF('carpeta_raiz', id);
+      addStringToSF('genero', decodedData['usuario']['genero']);
+      addIntToSF('edad', decodedData['edad']);
+      addIntToSF('carpeta_raiz', decodedData['carpeta_raiz']);
 
       SharedPreferences prefs = await SharedPreferences.getInstance();
 
       print(prefs.containsKey('usuario'));
+      print(prefs.containsKey('edad'));
       return true;
     } else {
       print(false);
       return false;
     }
     // return true;
-  }
-
-  addStringToSF(String clave, String valor) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString(clave, valor);
-  }
-
-  addIntToSF(String clave, int valor) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setInt(clave, valor);
   }
 
   Future<Usuario> getUsuario(int usuarioId) async {
@@ -72,5 +78,39 @@ class UsuarioProvider {
     print(decodeData['data']);
     // final Usuario usuario = Usuario.fromJson(decodeData['data']);
     return true;
+  }
+
+  addStringToSF(String clave, String valor) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString(clave, valor);
+  }
+
+  addIntToSF(String clave, int valor) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setInt(clave, valor);
+  }
+
+  get usuario {
+    return _prefs.getString('usuario');
+  }
+
+  get correo {
+    return _prefs.getString('correo');
+  }
+
+  get genero {
+    return _prefs.getString('genero');
+  }
+
+  get id {
+    return _prefs.getInt('id');
+  }
+
+  get edad {
+    return _prefs.getInt('edad');
+  }
+
+  get carpetaRaiz {
+    return _prefs.getInt('carpeta_raiz');
   }
 }
