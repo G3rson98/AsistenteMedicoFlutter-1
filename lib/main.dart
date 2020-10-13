@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Asistente médico',
       debugShowCheckedModeBanner: false,
-      initialRoute: 'historial',
+      initialRoute: 'scroll',
       routes: {
         'home': (BuildContext context) => HomePage(),
         'informacion': (BuildContext context) => InformacionPage(),
