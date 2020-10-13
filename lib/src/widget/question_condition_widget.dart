@@ -121,8 +121,8 @@ class _QuestionWidgetState extends State<QuestionWidget> {
                   for (var item in responses.question.items) {
                     respuestas.add(item.toJson()),
                   },
-
-                  if((number >= 3) || (responses.conditions[0].probability > 0.98)){
+                  /////////////////////////////////////aqui es el if grandote
+                  if((number >= 15) || (responses.conditions[0].probability > 0.98)){
 
                     for (var i = 0; i < enfermedades.length; i++) {
                       translateProvider.getTranslation(enfermedades[i].name).then((enfermedadSpanish) => {
